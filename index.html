@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/538a48f33d.js" crossorigin="anonymous"></script>
+    <title>Nos petits plats</title>
+</head>
+<body>
+    <header>
+        <img src="assets/Toque_logo.png">
+        <h1>Les petits plats</h1>
+    </header>
+    <main>
+        <section id="researchZone">
+            <div id="searchZone">
+                <input type="text" id="searchZone_Input">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div id="filterZone">
+                <div>
+                    <button>Ingredients</button>
+                    <i class="fas fa-chevron-up" id="ingredientsUp"></i>
+                    <i class="fas fa-chevron-down" id="ingredientsDown"></i>
+                </div>
+                <div>
+                    <button>Appareils</button>
+                    <i class="fas fa-chevron-up" id="appareilsUp"></i>
+                    <i class="fas fa-chevron-down" id="appareilsDown"></i>
+                </div>
+                <div>
+                    <button>Ustensiles</button>
+                    <i class="fas fa-chevron-up" id="ustensilesUp"></i>
+                    <i class="fas fa-chevron-down" id="ustensilesDown"></i>
+                </div>                
+            </div>
+        </section>
+        <section id="recipesZone">
+
+        </section>
+    </main>
+    <script src="scripts/classes/Recipes.js"></script>
+    <script src="scripts/pages/index.js"></script>
+</body>
+</html>
