@@ -5,6 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@700&family=Lato:wght@700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/538a48f33d.js" crossorigin="anonymous"></script>
     <title>Nos petits plats</title>
 </head>
@@ -16,22 +19,22 @@
     <main>
         <section id="researchZone">
             <div id="searchZone">
-                <input type="text" id="searchZone_Input">
-                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchZone_Input" value="Rechercher une recette">
+                <i class="fas fa-search"></i>
             </div>
             <div id="filterZone">
-                <div>
-                    <button>Ingredients</button>
+                <div id="ingredients_button">
+                    <button class="filters" id="filter_ingredients">Ingredients</button>
                     <i class="fas fa-chevron-up" id="ingredientsUp"></i>
                     <i class="fas fa-chevron-down" id="ingredientsDown"></i>
                 </div>
-                <div>
-                    <button>Appareils</button>
+                <div id="apparels_button">
+                    <button class="filters" id="filter_apparels">Appareils</button>
                     <i class="fas fa-chevron-up" id="appareilsUp"></i>
                     <i class="fas fa-chevron-down" id="appareilsDown"></i>
                 </div>
-                <div>
-                    <button>Ustensiles</button>
+                <div id="ustensils_button">
+                    <button class="filters" id="filter_ustensils">Ustensiles</button>
                     <i class="fas fa-chevron-up" id="ustensilesUp"></i>
                     <i class="fas fa-chevron-down" id="ustensilesDown"></i>
                 </div>                

@@ -1,0 +1,115 @@
+*{
+    box-sizing:border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+:root{
+    --logo: #D04F4F;
+    --blue: #3282F7;
+    --green: #68D9A4;
+    --orange: #ED6454;
+    --grey: #E7E7E7;
+    --white: #ffffff;
+    --black: #000000;
+}
+
+body{
+    font-size: 18px;
+}
+
+h1{
+    font-family: 'DM Sans', sans-serif;
+    color: var(--logo);
+    font-size: 2rem;
+    margin-top: 0;
+}
+
+/*----------HEADER----------*/
+header{
+    text-align: center;
+}
+
+header img{
+    width: 50px;
+    height: 46px;
+}
+
+/*----------SEARCH ZONE----------*/
+#researchZone{
+    position: relative;
+    margin: 0 auto;
+    width: 1240px;
+}
+
+#searchZone{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 69px;
+    border-radius: 5px;
+    background-color: var(--grey);
+    border: transparent;
+    margin-bottom: 2rem;
+}
+
+#searchZone_Input{
+    width: 100%;
+    height: 69px;
+    background-color: transparent;
+    opacity: 0.25;
+    border: transparent;
+    padding: 2rem;
+    margin-right: -48px;
+}
+
+.fa-search{
+    color: var(--black);
+    font-size: 1.5rem;
+}
+
+/*----------FILTER ZONE----------*/
+#filterZone{
+    display: flex;
+    justify-content: flex-start;
+}
+
+#filterZone div{
+    position: relative;
+}
+
+#ingredients_button,
+#apparels_button,
+#ustensils_button{
+    width: 170px;
+    height: 69px;
+    border-radius: 5px;
+    border: transparent;
+    color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 30px;
+    padding: 10px;
+}
+
+#ingredients_button{
+    background-color: var(--blue);
+}
+
+#apparels_button{
+    background-color: var(--green)
+}
+
+#ustensils_button{
+    background-color: var(--orange);
+}
+
+.filters{
+    border: transparent;
+    background-color: transparent;
+    color: var(--white);
+}
+
+.fa-chevron-down{
+    display: none;
+}
