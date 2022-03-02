@@ -28,11 +28,19 @@ h1{
 
 h2{
     font-size: 1rem;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+p {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 /*----------HEADER----------*/
 header{
     text-align: center;
+    margin-top: 25px;
 }
 
 header img{
@@ -80,7 +88,7 @@ header img{
     justify-content: flex-start;
 }
 
-#filterZone div{
+.filterButtons{
     position: relative;
 }
 
@@ -119,7 +127,7 @@ header img{
     font-size: 1rem;
 }
 
-.filterButtons i {
+.filters i {
     position: absolute;
     top: 27px;
     right: 1.5rem;
@@ -129,6 +137,22 @@ header img{
 #appareilsUp,
 #ustensilesUp {
     display: none;
+}
+
+#ingredientsList {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    list-style: none;
+    font-size: 1rem;
+    width: 700px;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: var(--blue);
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    
 }
 
 
@@ -154,7 +178,7 @@ header img{
     border-top-right-radius: 5px;
 }
 
-#recipeHeader{
+.recipeHeader{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -162,7 +186,7 @@ header img{
     height: auto;
 }
 
-#recipeTimer{
+.recipeTimer{
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -170,28 +194,34 @@ header img{
     font-weight: bold;
 }
 
-#recipeContent{
+.recipeContent{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-row: 25px;
 }
 
-#recipeIngredients {
+.recipeIngredients {
     padding: 10px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 7; 
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
-#recipeIngredients p{
+.recipeIngredients p{
     font-size: 0.8rem;
     margin: 0;
 }
 
-#recipeDescription{
+.recipeDescription{
     font-size: 0.8rem;
     margin: 0;
     padding: 10px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 6; 
+    -webkit-line-clamp: 7; 
     text-overflow: ellipsis;
-    overflow:hidden;
+    overflow: hidden;
+    
 }

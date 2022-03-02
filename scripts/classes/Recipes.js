@@ -17,9 +17,9 @@ class Recipes {
         imgRecipe.setAttribute("src", `assets/img.png`)
         
         const divRecipeHeader = document.createElement("div")
-        divRecipeHeader.id = "recipeHeader"
+        divRecipeHeader.className = "recipeHeader"
         const divRecipeTimer = document.createElement("div")
-        divRecipeTimer.id = "recipeTimer"
+        divRecipeTimer.className = "recipeTimer"
         
         const h2Recipe = document.createElement("h2")
         h2Recipe.textContent = this.name
@@ -34,13 +34,14 @@ class Recipes {
         divRecipeTimer.appendChild(timeRecipe)
 
         const divRecipeContent = document.createElement("div")
-        divRecipeContent.id = "recipeContent"
+        divRecipeContent.className = "recipeContent"
 
         const divIngredients = document.createElement("div") 
-        divIngredients.id = "recipeIngredients"
+        divIngredients.className = "recipeIngredients"
+        this.getIngredientsCard(divIngredients)
 
         const pDescription = document.createElement("p")
-        pDescription.id = "recipeDescription"
+        pDescription.className = "recipeDescription"
         pDescription.textContent = this.description
         divRecipeContent.appendChild(divIngredients)
         divRecipeContent.appendChild(pDescription)
@@ -52,10 +53,12 @@ class Recipes {
         return article
     }
 
-    // getIngredientsCard() {
-    //     const p = document.createElement("p");
-    //     p.textContent = ingredient.ingredient + ": " + ingredient.quantity + ingredient.unit;
-    //     ingredientsZone.appendChild(p);
-    //     }
-    // }
+    getIngredientsCard(divIngredients) {
+        this.ingredients.forEach((ingredient) => {
+            const p = document.createElement("p");
+            p.className = "displayedIngredients";
+            p.textContent = ingredient.ingredient + ": " + ingredient.quantity + ingredient.unit;
+            divIngredients.appendChild(p);
+        })
+    }
 }
