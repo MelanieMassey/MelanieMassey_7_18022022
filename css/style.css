@@ -93,7 +93,7 @@ header img{
 }
 
 #ingredients_button,
-#apparels_button,
+#appliance_button,
 #ustensils_button{
     width: 170px;
     height: 69px;
@@ -112,7 +112,7 @@ header img{
     background-color: var(--blue);
 }
 
-#apparels_button{
+#appliance_button{
     background-color: var(--green)
 }
 
@@ -134,8 +134,8 @@ header img{
 }
 
 #ingredientsUp,
-#appareilsUp,
-#ustensilesUp {
+#applianceUp,
+#ustensilsUp {
     display: none;
 }
 
@@ -152,7 +152,36 @@ header img{
     background-color: var(--blue);
     display: none;
     grid-template-columns: repeat(3, 1fr);
-    
+}
+
+#applianceList {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    list-style: none;
+    font-size: 1rem;
+    width: 500px;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: var(--green);
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#ustensilsList {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    list-style: none;
+    font-size: 1rem;
+    width: 500px;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: var(--orange);
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 
