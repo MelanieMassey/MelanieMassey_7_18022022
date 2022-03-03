@@ -1,19 +1,14 @@
 class Search {
-    // constructor(recipes) {
+    // constructor() {
     //     this.recipes = recipes
     // }
    
     display() {
-        // Récupération des données recettes et les rendres exploitables
-        async function getRecipes() {
-            const result = await fetch ("data/recipes.json")
-            const recipes = await result.json()
-            return recipes
-        }
-
+        
         // Fonction qui va afficher les recettes sur la page index.html
         async function displayRecipes(recipes) {  
-            //console.log(recipes)
+            console.log(recipes)
+
             // --Je vais chercher la section de ma page correspondante
             const recipesZone = document.getElementById("recipesZone")
             
@@ -25,9 +20,10 @@ class Search {
         }
 
         async function dislplayFilters(recipes) {
+            console.log(recipes)
+
             // /!\ Pour le moment ce sont les recettes du json et non les affichées
             const displayedRecipes = recipes.recipes
-            console.log(displayedRecipes)
 
             /*-----Récupération des ingrédients/appareils/ustensils des recettes affichées-----*/
             //~~Construction du DOM
@@ -155,16 +151,29 @@ class Search {
             ustensilsUp.addEventListener("click", displayUstUp);
         }
 
+        // // Event listener sur loupe pour lancer la recherche
+        // const loupeSearch = document.querySelector(".fa-search");
+        // loupeSearch.addEventListener("click", search);
+
+        // function search() {
+        //     const searchInput = document.getElementById("searchZone_Input")
+        //     console.log(this.recipes)
+        // }
+
         // Fonction qui va initialiser la récupération des données
         async function init() {
             const recipes = await getRecipes();
             displayRecipes(recipes.recipes);
             dislplayFilters(recipes);
+            
         }
 
         init();
     }
 
+    
+
+    
     
 
     

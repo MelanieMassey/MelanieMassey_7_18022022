@@ -57,7 +57,16 @@ class Recipes {
         this.ingredients.forEach((ingredient) => {
             const p = document.createElement("p");
             p.className = "displayedIngredients";
-            p.textContent = ingredient.ingredient + ": " + ingredient.quantity + ingredient.unit;
+
+            // Condition pour afficher ou non les quantités et unités
+            if(ingredient.quantity == undefined) {
+                p.textContent = ingredient.ingredient
+            } else if(ingredient.unit == undefined) {
+                p.textContent = ingredient.ingredient + ": " + ingredient.quantity
+            } else {
+                p.textContent = ingredient.ingredient + ": " + ingredient.quantity + ingredient.unit;
+            }
+            
             divIngredients.appendChild(p);
         })
     }
