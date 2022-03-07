@@ -33,6 +33,8 @@ class Search {
         });
         // * J'appelle la fonction qui va compléter les filtres
         this.displayFilters();
+        this.displayTags();
+        
     }
 
     // *** Fonction qui va compléter chaque filtre *** \\
@@ -57,7 +59,49 @@ class Search {
         })   
     }
 
-    
+    displayTags() {
+        const keywords = document.querySelectorAll(".filtersList li")
+        const tagsList = document.getElementById("tagsList")
+                
+        keywords.forEach((keyword) => {
+            
+            keyword.addEventListener("click", (e) => {
+                //e.preventDefault()
+                this.tags.push(keyword)
+                keyword.innerHTML += '<i class="fa-regular fa-circle-xmark"></i>'
+                
+                
+                this.tags.forEach((tag) => {
+                    tagsList.appendChild(tag)
+
+                    let index = this.tags.indexOf(tag)
+                    console.log(index)
+
+                    const tagClose = document.querySelector(".fa-circle-xmark")
+                    
+                    tagClose.addEventListener("click", (e) => {
+                        //e.preventDefault()
+                        console.log(keyword)
+                        
+                        //this.tags.splice(index, 1)
+                    })
+                })
+            })
+        })
+
+        
+
+        
+
+        
+        
+        /*Si je clique sur un mot clé alors j'affiche le tag correspondant
+        -- event listener sur li
+        -- si click
+        -- récupérer valeur du li clické
+        -- créer dom pour le mot clé ainsi défini*/
+    }
+
     
 
     

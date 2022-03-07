@@ -6,6 +6,7 @@ class Ustensil {
     getUstensilDOM() {
         const ustensilLi = document.createElement("li")
         ustensilLi.textContent = this.ustensilName
+        ustensilLi.className = "ustensilsLi"
         
         return ustensilLi
     }

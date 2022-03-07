@@ -4,9 +4,10 @@ class Ingredient {
     }
 
     getIngDOM() {
-        const ingredientsLi = document.createElement("li")
-        ingredientsLi.textContent = this.ingredientName
+        const ingredientLi = document.createElement("li")
+        ingredientLi.textContent = this.ingredientName
+        ingredientLi.className = "ingredientsLi"
         
-        return ingredientsLi
+        return ingredientLi
     }
 }

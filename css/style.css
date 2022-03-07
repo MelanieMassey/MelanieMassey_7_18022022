@@ -82,6 +82,37 @@ header img{
     font-size: 1.5rem;
 }
 
+/*----------TAGS ZONE----------*/
+#tagsList {
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+#tagsList li {
+    list-style: none;
+    color: var(--white);
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-right: 10px;
+}
+
+.ingredientsLi {
+    background-color: var(--blue);
+}
+
+.appliancesLi {
+    background-color: var(--green);
+}
+
+.ustensilsLi {
+    background-color: var(--orange);
+}
+
+.fa-circle-xmark {
+    margin-left: 20px;
+}
+
 /*----------FILTER ZONE----------*/
 #filterZone{
     display: flex;
@@ -231,11 +262,12 @@ header img{
 
 .recipeIngredients {
     padding: 10px;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 7; 
-    text-overflow: ellipsis;
     overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    
 }
 
 .recipeIngredients p{
