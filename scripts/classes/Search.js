@@ -31,7 +31,7 @@ class Search {
                 this.filterUstensils.add(ustensil)
             })
         });
-        // * J'appelle la fonction qui va compléter les filtres
+        // * J'appelle les fonctions qui vont compléter les filtres et afficher les tags
         this.displayFilters();
         this.displayTags();
         
@@ -56,43 +56,52 @@ class Search {
         this.filterUstensils.forEach((ustensil) => {
             const ustensilDOM = new Ustensil(ustensil)
             ustensilsList.appendChild(ustensilDOM.getUstensilDOM())
-        })   
-    }
-
-    displayTags() {
-        const keywords = document.querySelectorAll(".filtersList li")
-        const tagsList = document.getElementById("tagsList")
-                
-        keywords.forEach((keyword) => {
-            
-            keyword.addEventListener("click", (e) => {
-                //e.preventDefault()
-                this.tags.push(keyword)
-                keyword.innerHTML += '<i class="fa-regular fa-circle-xmark"></i>'
-                
-                
-                this.tags.forEach((tag) => {
-                    tagsList.appendChild(tag)
-
-                    let index = this.tags.indexOf(tag)
-                    console.log(index)
-
-                    const tagClose = document.querySelector(".fa-circle-xmark")
-                    
-                    tagClose.addEventListener("click", (e) => {
-                        //e.preventDefault()
-                        console.log(keyword)
-                        
-                        //this.tags.splice(index, 1)
-                    })
-                })
-            })
         })
 
-        
+        // * J'écoute le click pour chaque mot clé
+        const keywords = document.querySelectorAll(".filtersList li")
 
+        keywords.forEach((keyword) => {
+            keyword.addEventListener("click", (e) => {
+                //e.preventDefault()
+                //e.stopPropagation()
+                this.tags.push(keyword)
+                
+            
+                //keyword.innerHTML += '<i class="fa-regular fa-circle-xmark"></i>'
+                
+            })
+            console.log(this.tags)
+        })
         
+    }
 
+    // *** Fonction qui va afficher et retirer les tags *** \\
+    displayTags() {
+        
+        console.log(this.tags)
+        //const tagsList = document.getElementById("tagsList")
+                     
+        // this.tags.forEach((tag) => {
+        //     tagsList.appendChild(tag)
+
+        //     let index = this.tags.indexOf(tag)
+        //     //console.log(index)
+        //     //console.log(this.tags)
+
+        //     const tagClose = document.querySelector(".fa-circle-xmark")
+            
+        //     tagClose.addEventListener("click", (e) => {
+        //         e.preventDefault()
+        //         e.stopPropagation()
+        //         keyword.remove()
+        //         this.tags.splice(index, 1)
+                
+        //         //console.log(this.tags)
+        //     })
+        // })
+            
+            
         
         
         /*Si je clique sur un mot clé alors j'affiche le tag correspondant
