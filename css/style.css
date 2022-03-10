@@ -80,6 +80,7 @@ header img{
 .fa-search{
     color: var(--black);
     font-size: 1.5rem;
+    z-index: 10;
 }
 
 /*----------TAGS ZONE----------*/
