@@ -24,6 +24,8 @@ function displayIngDown() {
     ingredientsList.style.display = "grid";
     ingredientsDown.style.display = "none";
     ingredientsUp.style.display = "block";
+    displayAppUp();
+    displayUstUp();
 }
 ingredientsDown.addEventListener("click", displayIngDown);
 
@@ -46,6 +48,8 @@ function displayAppDown() {
     applianceList.style.display = "grid";
     applianceDown.style.display = "none";
     applianceUp.style.display = "block";
+    displayIngUp();
+    displayUstUp();
 }
 applianceDown.addEventListener("click", displayAppDown);
 
@@ -68,6 +72,8 @@ function displayUstDown() {
     ustensilsList.style.display = "grid";
     ustensilsDown.style.display = "none";
     ustensilsUp.style.display = "block";
+    displayIngUp();
+    displayAppUp();
 }
 ustensilsDown.addEventListener("click", displayUstDown);
 

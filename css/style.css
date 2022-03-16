@@ -98,15 +98,15 @@ header img{
     margin-right: 10px;
 }
 
-.ingredientsLi {
+.ingredient {
     background-color: var(--blue);
 }
 
-.appliancesLi {
+.appliance {
     background-color: var(--green);
 }
 
-.ustensilsLi {
+.ustensil {
     background-color: var(--orange);
 }
 
@@ -178,7 +178,7 @@ header img{
     list-style: none;
     font-size: 1rem;
     width: 700px;
-    height: 300px;
+    max-height: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: var(--blue);
@@ -193,7 +193,7 @@ header img{
     list-style: none;
     font-size: 1rem;
     width: 500px;
-    height: 300px;
+    max-height: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: var(--green);
@@ -208,7 +208,7 @@ header img{
     list-style: none;
     font-size: 1rem;
     width: 500px;
-    height: 300px;
+    max-height: 300px;
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: var(--orange);
@@ -244,7 +244,7 @@ header img{
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    height: auto;
+    height: 50px;
 }
 
 .recipeTimer{
@@ -259,15 +259,17 @@ header img{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-row: 25px;
+    padding: 0 10px 10px 10px;
+    height: 136px;
 }
 
 .recipeIngredients {
-    padding: 10px;
-    overflow: hidden;
+    /* padding: 10px; */
     display: -webkit-box;
-    -webkit-line-clamp: 7;
     -webkit-box-orient: vertical;
+    -webkit-line-clamp: 8;
     text-overflow: ellipsis;
+    overflow: hidden;
     
 }
 
@@ -279,10 +281,9 @@ header img{
 .recipeDescription{
     font-size: 0.8rem;
     margin: 0;
-    padding: 10px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 7; 
+    -webkit-line-clamp: 8; 
     text-overflow: ellipsis;
     overflow: hidden;
     

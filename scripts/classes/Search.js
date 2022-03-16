@@ -7,12 +7,14 @@ class Search {
         this.filterAppliance = new Set()
         this.filterUstensils = new Set()
         // * Mise en place du stockage des tags affichés
-        this.tags = []
+        this.tagsIngredients = []
+        this.tagsAppliance = []
+        this.tagsUstensils = []
         // * Recettes mises à jour après recherche
         this.updatedRecipes = []
     }
 
-    // *** Fonction principale qui affiche les recettes *** \\
+    // *** Méthode principale qui affiche les recettes *** \\
     display() {
         const recipesZone = document.getElementById("recipesZone")
 
@@ -40,7 +42,7 @@ class Search {
         
     }
 
-    // *** Fonction qui va compléter chaque filtre *** \\
+    // *** Méthode qui va compléter chaque filtre *** \\
     displayFilters() {
         // * J'affiche chaque ingrédient du SET via la classe Ingredient
         const ingredientsList = document.getElementById("ingredientsList")
@@ -67,6 +69,7 @@ class Search {
         
     }
 
+    // *** Méthode qui ajoute les tags au tableau this.tags ***\\
     pushTags() {
         const keywords = document.querySelectorAll(".filtersList li")
         
@@ -80,28 +83,31 @@ class Search {
                 // * Reset affichage
                 const tagsList = document.getElementById("tagsList")
                 tagsList.innerHTML = ""
-                
-                // * Envoie le tag clické dans le tableau this.tag et ajoute le code icone X
-                this.tags.push(keyword)
-                //keyword.innerHTML += '<i class="fa-regular fa-circle-xmark"></i>'
-                
-                // * Si mon tableau this.tags contient au moins un élément avec on les affiche
-                if(this.tags.length > -1) {
-                    this.displayTags()
-                }
-
+            
                 // * Retire le tag de sa liste de filtre concernée
                 switch(keyword.className) {
                     case "ingredientsLi":
+                        this.tagsIngredients.push(e.target.textContent)
                         this.filterIngredients.delete(keyword.textContent)
                     break
                     case "appliancesLi":
+                        this.tagsAppliance.push(e.target.textContent)
                         this.filterAppliance.delete(keyword.textContent)
                     break
                     case "ustensilsLi":
+                        this.tagsUstensils.push(e.target.textContent)
                         this.filterUstensils.delete(keyword.textContent)
                     break
                 }
+                
+                // * Si mon tableau this.tags contient au moins un élément on les affiche
+                // console.log(this.tags)
+                // console.log(this.tags.length)
+                // if(this.tags.length > 0) {
+                //     this.displayTags()
+                // }
+
+                this.displayTags()
             })
 
             // keyword.removeEventListener("click", (e) => {
@@ -118,31 +124,88 @@ class Search {
 
     }
 
+    // *** Méthode qui affiche les tags *** \\
     displayTags() {
+        
+        
         // * Cible dans mon DOM la liste où seront insérés les tags
         const tagsList = document.getElementById("tagsList")
-        
+
         // * Pour chaque tag du tableau
-        this.tags.forEach((tag) => {
-            const tagDOM = new Tag(tag);
+        this.tagsIngredients.forEach((tag) => {
+            
+            const tagDOM = new Tag(tag,"ingredient");
             const tagCard = tagDOM.getTagCard();
             tagsList.appendChild(tagCard);
 
-                        
-            let index = this.tags.indexOf(tag)
-
-            const tagClose = document.querySelector(".fa-circle-xmark")
-            
-            tagClose.addEventListener("click", (e) => {
-                console.log(tag)
-                tagsList.remove(tag)
-                
-                this.tags.splice(index, 1)
+            const closeTag = tagCard.querySelector("i");
+            closeTag.addEventListener("click", e => {
+                if(e.target.parentNode.className == "ingredient") {
+                    const index = this.tagsIngredients.indexOf(tag)
+                    this.tagsIngredients.splice(index, 1)
+                    e.target.parentNode.remove(tag)
+                }
             })
         })
-    
+        
+        this.tagsAppliance.forEach((tag) => {
+            
+            const tagDOM = new Tag(tag,"appliance");
+            const tagCard = tagDOM.getTagCard();
+            tagsList.appendChild(tagCard);
+
+            const closeTag = tagCard.querySelector("i");
+            closeTag.addEventListener("click", e => {
+                if(e.target.parentNode.className == "appliance") {
+                    const index = this.tagsIngredients.indexOf(tag)
+                    this.tagsAppliance.splice(index, 1)
+                    e.target.parentNode.remove(tag)
+                }
+            })
+        })
+
+        this.tagsUstensils.forEach((tag) => {
+            
+            const tagDOM = new Tag(tag,"ustensil");
+            const tagCard = tagDOM.getTagCard();
+            tagsList.appendChild(tagCard);
+
+            const closeTag = tagCard.querySelector("i");
+            closeTag.addEventListener("click", e => {
+                if(e.target.parentNode.className == "ustensil") {
+                    const index = this.tagsIngredients.indexOf(tag)
+                    this.tagsUstensils.splice(index, 1)
+                    e.target.parentNode.remove(tag)
+                }
+            })
+        })
+
+        // *** PREMIER ESSAI FERMETURE TAGS *** \\
+        // ~~~ Me met addEventListener not a function ~~~ \\
+        
+        // const tagClose = document.querySelectorAll("tagsList i")
+        // console.log(tagClose)
+        
+        // tagClose.forEarch((tag) => {
+        //     tag.addEventListener("click", (e) => {
+        //         //console.log("hello")
+        //         if(e.target.parentNode.className == "ingredient") {
+        //             const index = tagClose.indexOf(e.target.parentNode)
+        //             this.tagsIngredients.splice(index, 1)
+        //         } else if(e.target.parentNode.className == "appliance") {
+        //             const index = tagClose.indexOf(e.target.parentNode)
+        //             this.tagsAppliance.splice(index, 1)
+        //         } else if(e.target.parentNode.className == "ustensil") {
+        //             const index = tagClose.indexOf(e.target.parentNode)
+        //             this.tagsUstensils.splice(index, 1)
+        //         }
+                
+        //         e.target.parentNode.remove()
+        //     })
+        // })
     }
 
+    // *** Méthode de recherche à l'input dès 3 lettres renseignées *** \\
     searchInput() {
         const searchIcon = document.querySelector(".fa-search")
         
@@ -162,7 +225,7 @@ class Search {
                     }
                     
                 })
-                console.log(this.updatedRecipes)
+                
                 this.displayUpdatedRecipes()
             } else {
                 this.display()
@@ -171,7 +234,7 @@ class Search {
     }
 
     displayUpdatedRecipes() {
-        // * Resert de l'affichage des différentes zones
+        // * Reset l'affichage des différentes zones
         const recipesZone = document.getElementById("recipesZone")
         recipesZone.innerHTML = ""
         const ingredientsList = document.getElementById("ingredientsList")
