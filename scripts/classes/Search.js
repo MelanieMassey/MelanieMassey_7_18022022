@@ -1,4 +1,5 @@
 class Search {
+        
     constructor(recipes) {
         // * Récupération des recettes (recipes.recipes permet d'afficher un tableau direct)
         this.recipes = recipes.recipes
@@ -15,11 +16,44 @@ class Search {
     }
 
     // *** Méthode principale qui affiche les recettes *** \\
-    display() {
+    display(inputValue) {
+        // * Reset l'affichage des différentes zones
         const recipesZone = document.getElementById("recipesZone")
+        recipesZone.innerHTML = ""
+        const ingredientsList = document.getElementById("ingredientsList")
+        ingredientsList.innerHTML = ""
+        const applianceList = document.getElementById("applianceList")
+        applianceList.innerHTML = ""
+        const ustensilsList = document.getElementById("ustensilsList")
+        ustensilsList.innerHTML = ""
 
-        // * Pour chaque recette...
-        this.recipes.forEach((recipe) => {
+        // * Reset des SET
+        this.filterIngredients.clear()
+        this.filterAppliance.clear()
+        this.filterUstensils.clear()
+
+        // * Si l'inputValue > 3 lettres alors ça envoie les recettes correspondantes dans updatedRecipes
+        if(inputValue.length >= 3) {
+            this.recipes.forEach((recipe) => {
+                
+                if(recipe.name.toLowerCase().includes(inputValue) || 
+                recipe.description.toLowerCase().includes(inputValue) ||
+                recipe.ingredients.forEach((ingredient) => {
+                    ingredient.ingredient.toLowerCase().includes(inputValue)
+                })) {
+                    this.updatedRecipes.push(recipe)
+                }
+                
+            })
+        // * Sinon ça envoie toutes les recettes dans updatedRecipes
+        } else {
+            this.recipes.forEach((recipe) => {
+                this.updatedRecipes.push(recipe)
+            })
+        }
+
+        // * Pour chaque recette, à partir de updatedRecipes...
+        this.updatedRecipes.forEach((recipe) => {
             // * ... j'affiche la recette via la classe Recipe
             const recipeDOM = new Recipe(recipe);
             const recipeCard = recipeDOM.getRecipeCard();
@@ -38,9 +72,11 @@ class Search {
         // * J'appelle la fonction qui va compléter les filtres
         this.displayFilters();
         
-        this.searchInput();
+        //this.searchInput();
         
     }
+
+    
 
     // *** Méthode qui va compléter chaque filtre *** \\
     displayFilters() {
@@ -77,9 +113,6 @@ class Search {
             
             // * J'écoute le click
             keyword.addEventListener("click", (e) => {
-                // e.preventDefault()
-                // e.stopPropagation()
-
                 // * Reset affichage
                 const tagsList = document.getElementById("tagsList")
                 tagsList.innerHTML = ""
@@ -99,34 +132,15 @@ class Search {
                         this.filterUstensils.delete(keyword.textContent)
                     break
                 }
-                
-                // * Si mon tableau this.tags contient au moins un élément on les affiche
-                // console.log(this.tags)
-                // console.log(this.tags.length)
-                // if(this.tags.length > 0) {
-                //     this.displayTags()
-                // }
 
                 this.displayTags()
             })
-
-            // keyword.removeEventListener("click", (e) => {
-            //     e.preventDefault()
-            //     e.stopPropagation()
-                
-            //     // * Envoie le tag clické dans le tableau this.tag et ajoute le code icone X
-            //     this.tags.push(keyword)
-            //     //keyword.innerHTML += '<i class="fa-regular fa-circle-xmark"></i>'
-               
-            //     this.displayTags()
-            // })
         })
 
     }
 
     // *** Méthode qui affiche les tags *** \\
     displayTags() {
-        
         
         // * Cible dans mon DOM la liste où seront insérés les tags
         const tagsList = document.getElementById("tagsList")
@@ -182,7 +196,7 @@ class Search {
 
         // *** PREMIER ESSAI FERMETURE TAGS *** \\
         // ~~~ Me met addEventListener not a function ~~~ \\
-        
+
         // const tagClose = document.querySelectorAll("tagsList i")
         // console.log(tagClose)
         
@@ -206,72 +220,72 @@ class Search {
     }
 
     // *** Méthode de recherche à l'input dès 3 lettres renseignées *** \\
-    searchInput() {
-        const searchIcon = document.querySelector(".fa-search")
+    // searchInput() {
+    //     const searchIcon = document.querySelector(".fa-search")
         
-        searchIcon.addEventListener("click", (e) => {
+    //     searchIcon.addEventListener("click", (e) => {
             
-            const searchInput = document.getElementById("searchZone_Input").value.toLowerCase()
+    //         const searchInput = document.getElementById("searchZone_Input").value.toLowerCase()
                         
-            if(searchInput.length >= 3) {
-                this.recipes.forEach((recipe) => {
+    //         if(searchInput.length >= 3) {
+    //             this.recipes.forEach((recipe) => {
                     
-                    if(recipe.name.toLowerCase().includes(searchInput) || 
-                    recipe.description.toLowerCase().includes(searchInput) ||
-                    recipe.ingredients.forEach((ingredient) => {
-                        ingredient.ingredient.toLowerCase().includes(searchInput)
-                    })) {
-                        this.updatedRecipes.push(recipe)
-                    }
+    //                 if(recipe.name.toLowerCase().includes(searchInput) || 
+    //                 recipe.description.toLowerCase().includes(searchInput) ||
+    //                 recipe.ingredients.forEach((ingredient) => {
+    //                     ingredient.ingredient.toLowerCase().includes(searchInput)
+    //                 })) {
+    //                     this.updatedRecipes.push(recipe)
+    //                 }
                     
-                })
+    //             })
                 
-                this.displayUpdatedRecipes()
-            } else {
-                this.display()
-            }
-        })
-    }
+    //             this.displayUpdatedRecipes()
+    //         } else {
+    //             this.display()
+    //         }
+    //     })
+    // }
 
-    displayUpdatedRecipes() {
-        // * Reset l'affichage des différentes zones
-        const recipesZone = document.getElementById("recipesZone")
-        recipesZone.innerHTML = ""
-        const ingredientsList = document.getElementById("ingredientsList")
-        ingredientsList.innerHTML = ""
-        const applianceList = document.getElementById("applianceList")
-        applianceList.innerHTML = ""
-        const ustensilsList = document.getElementById("ustensilsList")
-        ustensilsList.innerHTML = ""
+    // displayUpdatedRecipes() {
+    //     // * Reset l'affichage des différentes zones
+    //     const recipesZone = document.getElementById("recipesZone")
+    //     recipesZone.innerHTML = ""
+    //     const ingredientsList = document.getElementById("ingredientsList")
+    //     ingredientsList.innerHTML = ""
+    //     const applianceList = document.getElementById("applianceList")
+    //     applianceList.innerHTML = ""
+    //     const ustensilsList = document.getElementById("ustensilsList")
+    //     ustensilsList.innerHTML = ""
 
-        // * Reset des SET
-        this.filterIngredients.clear()
-        this.filterAppliance.clear()
-        this.filterUstensils.clear()
+    //     // * Reset des SET
+    //     this.filterIngredients.clear()
+    //     this.filterAppliance.clear()
+    //     this.filterUstensils.clear()
 
-        // * Pour chaque recette du tableau des recettes mis à jour...
-        this.updatedRecipes.forEach((recipe) => {
-            // * ... j'affiche la recette via la classe Recipe
-            const recipeDOM = new Recipe(recipe);
-            const recipeCard = recipeDOM.getRecipeCard();
-            recipesZone.appendChild(recipeCard);
-            // * ... j'ajoute chaque ingrédient de la recette dans le SET filterIngredients
-            recipe.ingredients.forEach((ingredient) => {
-                this.filterIngredients.add(ingredient.ingredient[0].toUpperCase() + ingredient.ingredient.substring(1).toLowerCase());
-            })
-            // * ... j'ajoute chaque appareil de la recette dans le SET filterAppliance
-            this.filterAppliance.add(recipe.appliance);
-            // * ... j'ajoute chaque ustensil de la recette dans le SET filterUstensils
-            recipe.ustensils.forEach((ustensil) => {
-                this.filterUstensils.add(ustensil)
-            })
-        })
+    //     // * Pour chaque recette du tableau des recettes mis à jour...
+    //     this.updatedRecipes.forEach((recipe) => {
+    //         // * ... j'affiche la recette via la classe Recipe
+    //         const recipeDOM = new Recipe(recipe);
+    //         const recipeCard = recipeDOM.getRecipeCard();
+    //         recipesZone.appendChild(recipeCard);
+    //         // * ... j'ajoute chaque ingrédient de la recette dans le SET filterIngredients
+    //         recipe.ingredients.forEach((ingredient) => {
+    //             this.filterIngredients.add(ingredient.ingredient[0].toUpperCase() + ingredient.ingredient.substring(1).toLowerCase());
+    //         })
+    //         // * ... j'ajoute chaque appareil de la recette dans le SET filterAppliance
+    //         this.filterAppliance.add(recipe.appliance);
+    //         // * ... j'ajoute chaque ustensil de la recette dans le SET filterUstensils
+    //         recipe.ustensils.forEach((ustensil) => {
+    //             this.filterUstensils.add(ustensil)
+    //         })
+    //     })
 
-        // * J'appelle la fonction qui va compléter les filtres
-        this.displayFilters();
+    //     // * J'appelle la fonction qui va compléter les filtres
+    //     this.displayFilters();
         
-        this.searchInput();
-    }
+    //     this.searchInput();
+    // }
     
 
     

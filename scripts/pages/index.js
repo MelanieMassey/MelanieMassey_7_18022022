@@ -5,12 +5,41 @@ async function getRecipes() {
     return recipes
 }
 
+// *** Event listeners input de recherche *** \\
+function getInputValue() {
+    
+    const input = document.getElementById("searchZone_Input");
+    let inputValue = "";
+    console.log(inputValue);
+    input.addEventListener("change", () => {
+        inputValue = input.value.toLowerCase();
+        return inputValue;
+    })
+    
+}
+
+
 // *** Affichage des recettes via la méthode display() de la class Search *** \\
 // * J'appelle la fonction getRecipes, quand elle est appelée alors je fais la suite
 getRecipes().then((recipes) => {
+    const input = document.getElementById("searchZone_Input");
+    let inputValue = "";
+    
     const display = new Search(recipes);
-    display.display();
+    display.display(inputValue);
+    
+    console.log(inputValue);
+
+    input.addEventListener("change", () => {
+        
+        inputValue = input.value.toLowerCase();
+        console.log(inputValue);
+        const display = new Search(recipes);
+        display.display(inputValue);
+    })
 });
+
+
 
 // *** Event listeners des filtres *** \\
 // > Event listener click du filtre ingrédient
