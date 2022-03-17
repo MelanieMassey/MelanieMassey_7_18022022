@@ -80,20 +80,28 @@ class Search {
 
     // *** Méthode qui va compléter chaque filtre *** \\
     displayFilters() {
-        // * J'affiche chaque ingrédient du SET via la classe Ingredient
+
         const ingredientsList = document.getElementById("ingredientsList")
+        ingredientsList.innerHTML = ""
+        const applianceList = document.getElementById("applianceList")
+        applianceList.innerHTML = ""
+        const ustensilsList = document.getElementById("ustensilsList")
+        ustensilsList.innerHTML = ""
+
+        // * J'affiche chaque ingrédient du SET via la classe Ingredient
+        //const ingredientsList = document.getElementById("ingredientsList")
         this.filterIngredients.forEach((ingredient) => {
             const ingredientDOM = new Ingredient(ingredient)
             ingredientsList.appendChild(ingredientDOM.getIngDOM())
         })
         // * J'affiche chaque appareil du SET via la classe Appliance
-        const applianceList = document.getElementById("applianceList")
+        //const applianceList = document.getElementById("applianceList")
         this.filterAppliance.forEach((appliance) => {
             const applianceDOM = new Appliance(appliance)
             applianceList.appendChild(applianceDOM.getApplianceDOM())
         })
         // * J'affiche chaque ustensil du SET via la classe Ustensil
-        const ustensilsList = document.getElementById("ustensilsList")
+        //const ustensilsList = document.getElementById("ustensilsList")
         this.filterUstensils.forEach((ustensil) => {
             const ustensilDOM = new Ustensil(ustensil)
             ustensilsList.appendChild(ustensilDOM.getUstensilDOM())
@@ -132,8 +140,10 @@ class Search {
                         this.filterUstensils.delete(keyword.textContent)
                     break
                 }
-
+                
                 this.displayTags()
+
+                this.displayFilters()
             })
         })
 
@@ -141,7 +151,6 @@ class Search {
 
     // *** Méthode qui affiche les tags *** \\
     displayTags() {
-        
         // * Cible dans mon DOM la liste où seront insérés les tags
         const tagsList = document.getElementById("tagsList")
 
@@ -158,8 +167,11 @@ class Search {
                     const index = this.tagsIngredients.indexOf(tag)
                     this.tagsIngredients.splice(index, 1)
                     e.target.parentNode.remove(tag)
+                    this.filterIngredients.add(tag)
+                    this.displayFilters()
                 }
             })
+            
         })
         
         this.tagsAppliance.forEach((tag) => {
@@ -174,6 +186,8 @@ class Search {
                     const index = this.tagsIngredients.indexOf(tag)
                     this.tagsAppliance.splice(index, 1)
                     e.target.parentNode.remove(tag)
+                    this.filterAppliance.add(tag)
+                    this.displayFilters()
                 }
             })
         })
@@ -190,6 +204,8 @@ class Search {
                     const index = this.tagsIngredients.indexOf(tag)
                     this.tagsUstensils.splice(index, 1)
                     e.target.parentNode.remove(tag)
+                    this.filterUstensils.add(tag)
+                    this.displayFilters()
                 }
             })
         })

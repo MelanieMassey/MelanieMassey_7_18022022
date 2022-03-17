@@ -27,13 +27,9 @@ getRecipes().then((recipes) => {
     
     const display = new Search(recipes);
     display.display(inputValue);
-    
-    console.log(inputValue);
 
     input.addEventListener("change", () => {
-        
         inputValue = input.value.toLowerCase();
-        console.log(inputValue);
         const display = new Search(recipes);
         display.display(inputValue);
     })

@@ -6,11 +6,30 @@
 :root{
     --logo: #D04F4F;
     --blue: #3282F7;
+    --lightBlue: #85b4fa;
+    --darkBlue: #1e4c92;
     --green: #68D9A4;
     --orange: #ED6454;
     --grey: #E7E7E7;
     --white: #ffffff;
     --black: #000000;
+}
+
+/*Mise en forme de la scrollbar*/
+::-webkit-scrollbar {
+    width: 0.5rem;
+}
+  
+::-webkit-scrollbar-track {
+    background-color: transparent;
+    -webkit-border-radius: 1rem;
+    border-radius: 1rem;
+}
+  
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 1rem;
+    border-radius: 1rem;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 body{
@@ -88,7 +107,11 @@ header img{
     padding: 0;
     display: flex;
     justify-content: flex-start;
+    font-size: 0.9rem;
+    font-weight: 700;
 }
+
+
 
 #tagsList li {
     list-style: none;
@@ -112,6 +135,7 @@ header img{
 
 .fa-circle-xmark {
     margin-left: 20px;
+    font-size: 1.2rem;
 }
 
 /*----------FILTER ZONE----------*/
@@ -157,6 +181,7 @@ header img{
     background-color: transparent;
     color: var(--white);
     font-size: 1rem;
+    font-weight: 700;
 }
 
 .filters i {
@@ -169,6 +194,12 @@ header img{
 #applianceUp,
 #ustensilsUp {
     display: none;
+}
+
+.filtersList {
+    padding-left: 16px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 #ingredientsList {
@@ -185,6 +216,7 @@ header img{
     display: none;
     grid-template-columns: repeat(3, 1fr);
 }
+
 
 #applianceList {
     position: absolute;
@@ -214,6 +246,13 @@ header img{
     background-color: var(--orange);
     display: none;
     grid-template-columns: repeat(2, 1fr);
+}
+
+.ingredientsLi,
+.appliancesLi,
+.ustensilsLi {
+    
+    padding-bottom: 5px;
 }
 
 
@@ -255,11 +294,15 @@ header img{
     font-weight: bold;
 }
 
+.fa-clock {
+    margin-right: 8px;
+}
+
 .recipeContent{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-row: 25px;
-    padding: 0 10px 10px 10px;
+    padding: 0 10px 12px 10px;
     height: 136px;
 }
 
@@ -279,6 +322,7 @@ header img{
 }
 
 .recipeDescription{
+    font-family: 'Roboto';
     font-size: 0.8rem;
     margin: 0;
     display: -webkit-box;
