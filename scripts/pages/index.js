@@ -69,7 +69,7 @@ const applianceUp = document.getElementById("applianceUp");
 const applianceList = document.getElementById("applianceList")
 
 function displayAppDown() {
-    applianceButton.style.width = "500px";
+    applianceButton.style.width = "400px";
     applianceList.style.display = "grid";
     applianceDown.style.display = "none";
     applianceUp.style.display = "block";

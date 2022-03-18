@@ -9,14 +9,19 @@ class Search {
         this.filterUstensils = new Set()
         // * Mise en place du stockage des tags affichés
         this.tagsIngredients = []
-        this.tagsAppliance = []
+        this.tagsAppliances = []
         this.tagsUstensils = []
-        // * Recettes mises à jour après recherche
-        this.updatedRecipes = []
+        
+        this.searchInput = ""
     }
 
     // *** Méthode principale qui affiche les recettes *** \\
-    display(inputValue) {
+    display(inputValue=null) {
+        
+        if(inputValue != null) {
+            this.searchInput = inputValue
+        }
+        
         // * Reset l'affichage des différentes zones
         const recipesZone = document.getElementById("recipesZone")
         recipesZone.innerHTML = ""
@@ -33,50 +38,85 @@ class Search {
         this.filterUstensils.clear()
 
         // * Si l'inputValue > 3 lettres alors ça envoie les recettes correspondantes dans updatedRecipes
-        if(inputValue.length >= 3) {
+        if(this.searchInput.length >= 3 || (this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0)) {
+            console.log("hello")
             this.recipes.forEach((recipe) => {
                 
-                if(recipe.name.toLowerCase().includes(inputValue) || 
-                recipe.description.toLowerCase().includes(inputValue) ||
+                if(recipe.name.toLowerCase().includes(this.searchInput) || 
+                recipe.description.toLowerCase().includes(this.searchInput) ||
                 recipe.ingredients.forEach((ingredient) => {
-                    ingredient.ingredient.toLowerCase().includes(inputValue)
-                })) {
-                    this.updatedRecipes.push(recipe)
+                    ingredient.ingredient.toLowerCase().includes(this.searchInput)
+                }) && (this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe))) {
+                    this.displayRecipe(recipe)
                 }
                 
             })
         // * Sinon ça envoie toutes les recettes dans updatedRecipes
         } else {
             this.recipes.forEach((recipe) => {
-                this.updatedRecipes.push(recipe)
+                this.displayRecipe(recipe)
             })
         }
 
-        // * Pour chaque recette, à partir de updatedRecipes...
-        this.updatedRecipes.forEach((recipe) => {
-            // * ... j'affiche la recette via la classe Recipe
-            const recipeDOM = new Recipe(recipe);
-            const recipeCard = recipeDOM.getRecipeCard();
-            recipesZone.appendChild(recipeCard);
-            // * ... j'ajoute chaque ingrédient de la recette dans le SET filterIngredients
-            recipe.ingredients.forEach((ingredient) => {
-                this.filterIngredients.add(ingredient.ingredient[0].toUpperCase() + ingredient.ingredient.substring(1).toLowerCase());
-            })
-            // * ... j'ajoute chaque appareil de la recette dans le SET filterAppliance
-            this.filterAppliance.add(recipe.appliance);
-            // * ... j'ajoute chaque ustensil de la recette dans le SET filterUstensils
-            recipe.ustensils.forEach((ustensil) => {
-                this.filterUstensils.add(ustensil)
-            })
-        });
+        
         // * J'appelle la fonction qui va compléter les filtres
         this.displayFilters();
-        
-        //this.searchInput();
-        
+            
     }
 
-    
+    recipeHasIngredients(recipe) {
+        let result = 0;
+        this.tagsIngredients.forEach((ingredientTag) => {
+            recipe.ingredients.forEach((ingredient) => {
+                if(ingredient.ingredient.toLowerCase() == ingredientTag.toLowerCase()) {
+                    result++;
+                }
+            })
+        })
+        return (result >= this.tagsIngredients.length)
+    }
+
+    // *** Méthodes qui vérifient si les tags sont contenus dans les recettes *** \\
+    recipeHasAppliances(recipe) {
+        let result = 0;
+        this.tagsAppliances.forEach((applianceTag) => {
+            if(recipe.appliance.toLowerCase() == applianceTag.toLowerCase()) {
+                result++;
+            }
+        })
+        return (result >= this.tagsAppliances.length)
+    }
+
+    recipeHasUstencils(recipe) {
+        let result = 0;
+        this.tagsUstensils.forEach((ustensilTag) => {
+            recipe.ustensils.forEach((ustensil) => {
+                if(ustensil.toLowerCase() == ustensilTag.toLowerCase()) {
+                    result++;
+                }
+            })
+        })
+        return (result >= this.tagsUstensils.length)
+    }
+
+    // *** Méthode qui va afficher la recette si elle respecte les conditions *** \\
+    displayRecipe(recipe) {
+        const recipesZone = document.getElementById("recipesZone")
+        // * ... j'affiche la recette via la classe Recipe
+        const recipeDOM = new Recipe(recipe);
+        const recipeCard = recipeDOM.getRecipeCard();
+        recipesZone.appendChild(recipeCard);
+        // * ... j'ajoute chaque ingrédient de la recette dans le SET filterIngredients
+        recipe.ingredients.forEach((ingredient) => {
+            this.filterIngredients.add(ingredient.ingredient[0].toUpperCase() + ingredient.ingredient.substring(1).toLowerCase());
+        })
+        // * ... j'ajoute chaque appareil de la recette dans le SET filterAppliance
+        this.filterAppliance.add(recipe.appliance);
+        // * ... j'ajoute chaque ustensil de la recette dans le SET filterUstensils
+        recipe.ustensils.forEach((ustensil) => {
+            this.filterUstensils.add(ustensil)
+        })
+    }
 
     // *** Méthode qui va compléter chaque filtre *** \\
     displayFilters() {
@@ -132,7 +172,7 @@ class Search {
                         this.filterIngredients.delete(keyword.textContent)
                     break
                     case "appliancesLi":
-                        this.tagsAppliance.push(e.target.textContent)
+                        this.tagsAppliances.push(e.target.textContent)
                         this.filterAppliance.delete(keyword.textContent)
                     break
                     case "ustensilsLi":
@@ -142,8 +182,8 @@ class Search {
                 }
                 
                 this.displayTags()
-
-                this.displayFilters()
+                this.display()
+                
             })
         })
 
@@ -160,6 +200,7 @@ class Search {
             const tagDOM = new Tag(tag,"ingredient");
             const tagCard = tagDOM.getTagCard();
             tagsList.appendChild(tagCard);
+            
 
             const closeTag = tagCard.querySelector("i");
             closeTag.addEventListener("click", e => {
@@ -168,13 +209,13 @@ class Search {
                     this.tagsIngredients.splice(index, 1)
                     e.target.parentNode.remove(tag)
                     this.filterIngredients.add(tag)
-                    this.displayFilters()
+                    this.display()
                 }
             })
-            
+
         })
         
-        this.tagsAppliance.forEach((tag) => {
+        this.tagsAppliances.forEach((tag) => {
             
             const tagDOM = new Tag(tag,"appliance");
             const tagCard = tagDOM.getTagCard();
@@ -184,10 +225,10 @@ class Search {
             closeTag.addEventListener("click", e => {
                 if(e.target.parentNode.className == "appliance") {
                     const index = this.tagsIngredients.indexOf(tag)
-                    this.tagsAppliance.splice(index, 1)
+                    this.tagsAppliances.splice(index, 1)
                     e.target.parentNode.remove(tag)
                     this.filterAppliance.add(tag)
-                    this.displayFilters()
+                    this.display()
                 }
             })
         })
@@ -205,10 +246,12 @@ class Search {
                     this.tagsUstensils.splice(index, 1)
                     e.target.parentNode.remove(tag)
                     this.filterUstensils.add(tag)
-                    this.displayFilters()
+                    this.display()
                 }
             })
         })
+
+        
 
         // *** PREMIER ESSAI FERMETURE TAGS *** \\
         // ~~~ Me met addEventListener not a function ~~~ \\
@@ -224,7 +267,7 @@ class Search {
         //             this.tagsIngredients.splice(index, 1)
         //         } else if(e.target.parentNode.className == "appliance") {
         //             const index = tagClose.indexOf(e.target.parentNode)
-        //             this.tagsAppliance.splice(index, 1)
+        //             this.tagsAppliances.splice(index, 1)
         //         } else if(e.target.parentNode.className == "ustensil") {
         //             const index = tagClose.indexOf(e.target.parentNode)
         //             this.tagsUstensils.splice(index, 1)
@@ -235,7 +278,7 @@ class Search {
         // })
     }
 
-    // *** Méthode de recherche à l'input dès 3 lettres renseignées *** \\
+    // *** PREMIER ESSAI RECHERCHE INPUT *** \\
     // searchInput() {
     //     const searchIcon = document.querySelector(".fa-search")
         
