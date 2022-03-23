@@ -13,6 +13,8 @@ class Search {
         this.tagsUstensils = []
         
         this.searchInput = ""
+
+        this.displayedRecipe = []
     }
 
     // *** Méthode principale qui affiche les recettes *** \\
@@ -46,9 +48,26 @@ class Search {
                 recipe.description.toLowerCase().includes(this.searchInput) ||
                 recipe.ingredients.forEach((ingredient) => {
                     ingredient.ingredient.toLowerCase().includes(this.searchInput)
-                }) && (this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe))) {
+                })) {
                     this.displayRecipe(recipe)
+                    this.displayedRecipe.push(recipe)
+                    console.log(this.displayedRecipe)
+
+                    // * Tentative#2 de combiner if recherche input et tags
+                    // this.displayedRecipe.forEach((recipe) => {
+                    //     if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe)) {
+                    //         this.displayRecipe(recipe)
+                    //         }
+                    // })
                 }
+
+                
+                
+                
+                // * Tentative#1 de combiner if recherche input et tags
+                // || (this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe))) {
+                //     this.displayRecipe(recipe)
+                // }
                 
             })
         // * Sinon ça envoie toutes les recettes dans updatedRecipes
