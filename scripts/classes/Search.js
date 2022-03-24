@@ -140,6 +140,13 @@ class Search {
     // *** Méthode qui va compléter chaque filtre *** \\
     displayFilters() {
 
+        const filterZone = document.getElementById("filterZone")
+        console.log(filterZone)
+
+        const testFilterDOM = new Combobox(this.filterIngredients, "ingredients")
+        console.log(testFilterDOM)
+        filterZone.appendChild(testFilterDOM.getComboboxCard())
+
         const ingredientsList = document.getElementById("ingredientsList")
         ingredientsList.innerHTML = ""
         const applianceList = document.getElementById("applianceList")
