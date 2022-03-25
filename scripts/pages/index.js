@@ -38,6 +38,32 @@ getRecipes().then((recipes) => {
 
 
 // *** Event listeners des filtres *** \\
+// > Event listener click du filtre test
+// const testButton = document.getElementById("test_button");
+// console.log(testButton)
+// const testDown = document.getElementById("testDown");
+// console.log(testDown)
+// const testUp = document.getElementById("testUp");
+// const testList = document.getElementById("testList");
+
+// function displayTestDown() {
+//     testButton.style.width = "700px";
+//     testList.style.display = "grid";
+//     testDown.style.display = "none";
+//     testUp.style.display = "block";
+//     displayAppUp();
+//     displayUstUp();
+// }
+// testDown.addEventListener("click", displayTestDown);
+
+// function displayTestUp() {
+//     testButton.style.width = "170px";
+//     testList.style.display = "none";
+//     testDown.style.display = "block";
+//     testUp.style.display = "none";
+// }
+// testUp.addEventListener("click", displayTestUp);
+
 // > Event listener click du filtre ingrédient
 const ingredientsButton = document.getElementById("ingredients_button");
 const ingredientsDown = document.getElementById("ingredientsDown");

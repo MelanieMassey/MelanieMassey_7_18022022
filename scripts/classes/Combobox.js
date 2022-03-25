@@ -3,6 +3,7 @@ class Combobox {
         this.comboboxContent = comboboxContent
         this.comboboxValue = comboboxValue
         this.comboboxName = comboboxValue[0].toUpperCase() + comboboxValue.substring(1)
+        this.comboboxId = comboboxValue + "_button"
         
     }
 
@@ -37,7 +38,25 @@ class Combobox {
         comboboxButton.appendChild(comboboxList)
         this.getComboboxContentCard(comboboxList)
 
+        iconDown.addEventListener("click", () => {
+            comboboxButton.style.width = "700px";
+            comboboxList.style.display = "grid";
+            iconDown.style.display = "none";
+            iconUp.style.display = "block";
+            
+        })
+
+        iconUp.addEventListener("click", () => {
+            comboboxButton.style.width = "170px";
+            comboboxList.style.display = "none";
+            iconDown.style.display = "block";
+            iconUp.style.display = "none";
+        })
+
+        
+
         return comboboxButton
+
     }
 
     getComboboxContentCard(comboboxList) {
@@ -48,5 +67,9 @@ class Combobox {
         
             comboboxList.appendChild(keywordLi)
         })
+
+        
     }
+
+    
 }

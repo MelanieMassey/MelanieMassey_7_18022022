@@ -171,6 +171,10 @@ header img{
     background-color: var(--orange);
 }
 
+#test_button{
+    background-color: var(--blue);
+}
+
 .filters{
     border: transparent;
     background-color: transparent;
@@ -191,7 +195,8 @@ header img{
 
 #ingredientsUp,
 #applianceUp,
-#ustensilsUp {
+#ustensilsUp,
+#testUp {
     display: none;
 }
 
@@ -202,6 +207,21 @@ header img{
 }
 
 #ingredientsList {
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    list-style: none;
+    font-size: 1rem;
+    width: 700px;
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: var(--blue);
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+#testList {
     position: absolute;
     top: 50px;
     right: 0px;
@@ -253,6 +273,8 @@ header img{
     
     padding-bottom: 5px;
 }
+
+
 
 
 /*----------RECIPES ZONE----------*/

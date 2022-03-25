@@ -7,6 +7,7 @@ class Search {
         this.filterIngredients = new Set()
         this.filterAppliance = new Set()
         this.filterUstensils = new Set()
+        this.filterTest = this.filterIngredients
         // * Mise en place du stockage des tags affichés
         this.tagsIngredients = []
         this.tagsAppliances = []
@@ -142,8 +143,7 @@ class Search {
 
         const filterZone = document.getElementById("filterZone")
         console.log(filterZone)
-
-        const testFilterDOM = new Combobox(this.filterIngredients, "ingredients")
+        const testFilterDOM = new Combobox(this.filterTest, "test")
         console.log(testFilterDOM)
         filterZone.appendChild(testFilterDOM.getComboboxCard())
 
