@@ -63,6 +63,8 @@ class Recipe {
                 p.textContent = ingredient.ingredient
             } else if(ingredient.unit == undefined) {
                 p.textContent = ingredient.ingredient + ": " + ingredient.quantity
+            } else if(ingredient.unit == "grammes") {
+                p.textContent = ingredient.ingredient + ": " + ingredient.quantity + "g"
             } else {
                 p.textContent = ingredient.ingredient + ": " + ingredient.quantity + ingredient.unit;
             }

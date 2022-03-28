@@ -75,6 +75,13 @@ class Search {
             })
         }
 
+        // * Affiche message "pas de recette disponible"
+        if(recipesZone.innerHTML == "") {
+            const noRecipesDiv = document.createElement("div")
+            noRecipesDiv.textContent = "Il n'y a pas de recette correspondant à votre recherche."
+            noRecipesDiv.id = "noRecipes"
+            recipesZone.appendChild(noRecipesDiv)
+        }
         
         // * J'appelle la fonction qui va compléter les filtres
         this.displayFilters(this.filterIngredients, this.filterAppliances, this.filterUstensils);
@@ -114,12 +121,7 @@ class Search {
         })
 
 
-        if(recipesZone.innerHTML == "") {
-            const noRecipesDiv = document.createElement("div")
-            noRecipesDiv.textContent = "Il n'y a pas de recette correspondant à votre recherche."
-            noRecipesDiv.id = "noRecipes"
-            recipesZone.appendChild(noRecipesDiv)
-        }
+        
     }
 
     recipeHasIngredients(recipe) {
