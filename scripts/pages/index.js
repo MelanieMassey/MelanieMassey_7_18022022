@@ -52,7 +52,7 @@ function displayIngDown() {
     displayAppUp();
     displayUstUp();
 }
-ingredientsDown.addEventListener("click", displayIngDown);
+ingredientsButton.addEventListener("click", displayIngDown);
 
 function displayIngUp() {
     ingredientsButton.style.width = "170px";
@@ -63,10 +63,10 @@ function displayIngUp() {
 ingredientsUp.addEventListener("click", displayIngUp);
 
 // > Event listener click du filtre appareils
-const applianceButton = document.getElementById("appliance_button");
-const applianceDown = document.getElementById("applianceDown");
-const applianceUp = document.getElementById("applianceUp");
-const applianceList = document.getElementById("applianceList")
+const applianceButton = document.getElementById("appliances_button");
+const applianceDown = document.getElementById("appliancesDown");
+const applianceUp = document.getElementById("appliancesUp");
+const applianceList = document.getElementById("appliancesList")
 
 function displayAppDown() {
     applianceButton.style.width = "400px";
@@ -76,7 +76,7 @@ function displayAppDown() {
     displayIngUp();
     displayUstUp();
 }
-applianceDown.addEventListener("click", displayAppDown);
+applianceButton.addEventListener("click", displayAppDown);
 
 function displayAppUp() {
     applianceButton.style.width = "170px";
@@ -100,7 +100,7 @@ function displayUstDown() {
     displayIngUp();
     displayAppUp();
 }
-ustensilsDown.addEventListener("click", displayUstDown);
+ustensilsButton.addEventListener("click", displayUstDown);
 
 function displayUstUp() {
     ustensilsButton.style.width = "170px";

@@ -5,7 +5,7 @@ class Search {
         this.recipes = recipes.recipes
         // * Mise en place des Set qui sotckeront les données affichées
         this.filterIngredients = new Set()
-        this.filterAppliance = new Set()
+        this.filterAppliances = new Set()
         this.filterUstensils = new Set()
         // * Mise en place du stockage des tags affichés
         this.tagsIngredients = []
@@ -14,7 +14,10 @@ class Search {
         
         this.searchInput = ""
 
-        this.displayedRecipe = []
+        // * Variables boutons filtres
+        this.ingredientsInput = document.getElementById("filter_ingredients")
+        this.appliancesInput = document.getElementById("filter_appliances")
+        this.ustensilsInput = document.getElementById("filter_ustensils")
     }
 
     // *** Méthode principale qui affiche les recettes *** \\
@@ -29,48 +32,43 @@ class Search {
         recipesZone.innerHTML = ""
         const ingredientsList = document.getElementById("ingredientsList")
         ingredientsList.innerHTML = ""
-        const applianceList = document.getElementById("applianceList")
-        applianceList.innerHTML = ""
+        const appliancesList = document.getElementById("appliancesList")
+        appliancesList.innerHTML = ""
         const ustensilsList = document.getElementById("ustensilsList")
         ustensilsList.innerHTML = ""
 
         // * Reset des SET
         this.filterIngredients.clear()
-        this.filterAppliance.clear()
+        this.filterAppliances.clear()
         this.filterUstensils.clear()
 
         // * Si l'inputValue > 3 lettres alors ça envoie les recettes correspondantes dans updatedRecipes
         if(this.searchInput.length >= 3 || (this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0)) {
-            console.log("hello")
             this.recipes.forEach((recipe) => {
-                
                 if(recipe.name.toLowerCase().includes(this.searchInput) || 
                 recipe.description.toLowerCase().includes(this.searchInput) ||
                 recipe.ingredients.forEach((ingredient) => {
                     ingredient.ingredient.toLowerCase().includes(this.searchInput)
-                })) {
+                }) || (this.recipeHasIngredients(recipe)) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe))
+                {
                     this.displayRecipe(recipe)
-                    this.displayedRecipe.push(recipe)
-                    console.log(this.displayedRecipe)
-
-                    // * Tentative#2 de combiner if recherche input et tags
-                    // this.displayedRecipe.forEach((recipe) => {
-                    //     if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe)) {
-                    //         this.displayRecipe(recipe)
-                    //         }
-                    // })
-                }
+                } 
 
                 
                 
+
+                // * Tentative#2 de combiner if recherche input et tags
+                // this.displayedRecipe.forEach((recipe) => {
+                //     if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe)) {
+                //         recipesZone.innerHTML = ""
+                //         this.displayRecipe(recipe)
+                //         }
+                // })
                 
                 // * Tentative#1 de combiner if recherche input et tags
-                // || (this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe))) {
-                //     this.displayRecipe(recipe)
-                // }
+                
                 
             })
-        // * Sinon ça envoie toutes les recettes dans updatedRecipes
         } else {
             this.recipes.forEach((recipe) => {
                 this.displayRecipe(recipe)
@@ -79,12 +77,56 @@ class Search {
 
         
         // * J'appelle la fonction qui va compléter les filtres
-        this.displayFilters();
-            
+        this.displayFilters(this.filterIngredients, this.filterAppliances, this.filterUstensils);
+        
+        // > Event listener input du filtre ingrédients
+        this.ingredientsInput.addEventListener("input", (e) => {
+            const value = e.target.value
+            let newIngredientsSet = new Set();
+            this.filterIngredients.forEach((ingredient) => {
+                if(ingredient.toLowerCase().includes(value.toLowerCase())) {
+                    newIngredientsSet.add(ingredient);
+                }
+            })                        
+            this.displayFilters(newIngredientsSet, this.filterAppliances, this.filterUstensils)          
+        })
+        // > Event listener input du filtre appareils
+        this.appliancesInput.addEventListener("input", (e) => {
+            const value = e.target.value
+            let newAppliancesSet = new Set();
+            this.filterAppliances.forEach((appliance) => {
+                if(appliance.toLowerCase().includes(value.toLowerCase())) {
+                    newAppliancesSet.add(appliance);
+                }
+            })                        
+            this.displayFilters(this.filterIngredients, newAppliancesSet, this.filterUstensils)          
+        })
+        // > Event listener input du filtre ustensils
+        this.ustensilsInput.addEventListener("input", (e) => {
+            const value = e.target.value
+            let newUstensilsSet = new Set();
+            this.filterUstensils.forEach((ustensil) => {
+                if(ustensil.toLowerCase().includes(value.toLowerCase())) {
+                    newUstensilsSet.add(ustensil);
+                }
+            })                        
+            this.displayFilters(this.filterIngredients, this.filterAppliances, newUstensilsSet)          
+        })
+
+
+        if(recipesZone.innerHTML == "") {
+            const noRecipesDiv = document.createElement("div")
+            noRecipesDiv.textContent = "Il n'y a pas de recette correspondant à votre recherche."
+            noRecipesDiv.id = "noRecipes"
+            recipesZone.appendChild(noRecipesDiv)
+        }
     }
 
     recipeHasIngredients(recipe) {
         let result = 0;
+        if(this.tagsIngredients <= 0) {
+            return false;
+        }
         this.tagsIngredients.forEach((ingredientTag) => {
             recipe.ingredients.forEach((ingredient) => {
                 if(ingredient.ingredient.toLowerCase() == ingredientTag.toLowerCase()) {
@@ -98,6 +140,9 @@ class Search {
     // *** Méthodes qui vérifient si les tags sont contenus dans les recettes *** \\
     recipeHasAppliances(recipe) {
         let result = 0;
+        if(this.tagsAppliances <= 0){
+            return false;
+        }
         this.tagsAppliances.forEach((applianceTag) => {
             if(recipe.appliance.toLowerCase() == applianceTag.toLowerCase()) {
                 result++;
@@ -108,6 +153,9 @@ class Search {
 
     recipeHasUstencils(recipe) {
         let result = 0;
+        if(this.tagsUstensils <= 0) {
+            return false;
+        }
         this.tagsUstensils.forEach((ustensilTag) => {
             recipe.ustensils.forEach((ustensil) => {
                 if(ustensil.toLowerCase() == ustensilTag.toLowerCase()) {
@@ -129,8 +177,10 @@ class Search {
         recipe.ingredients.forEach((ingredient) => {
             this.filterIngredients.add(ingredient.ingredient[0].toUpperCase() + ingredient.ingredient.substring(1).toLowerCase());
         })
+        this.filterIngredientsArray = Array.from(this.filterIngredients)
+        
         // * ... j'ajoute chaque appareil de la recette dans le SET filterAppliance
-        this.filterAppliance.add(recipe.appliance);
+        this.filterAppliances.add(recipe.appliance);
         // * ... j'ajoute chaque ustensil de la recette dans le SET filterUstensils
         recipe.ustensils.forEach((ustensil) => {
             this.filterUstensils.add(ustensil)
@@ -138,30 +188,30 @@ class Search {
     }
 
     // *** Méthode qui va compléter chaque filtre *** \\
-    displayFilters() {
+    displayFilters(set1, set2, set3) {
 
         const ingredientsList = document.getElementById("ingredientsList")
         ingredientsList.innerHTML = ""
-        const applianceList = document.getElementById("applianceList")
-        applianceList.innerHTML = ""
+        const appliancesList = document.getElementById("appliancesList")
+        appliancesList.innerHTML = ""
         const ustensilsList = document.getElementById("ustensilsList")
         ustensilsList.innerHTML = ""
 
         // * J'affiche chaque ingrédient du SET via la classe Ingredient
         //const ingredientsList = document.getElementById("ingredientsList")
-        this.filterIngredients.forEach((ingredient) => {
+        set1.forEach((ingredient) => {
             const ingredientDOM = new Ingredient(ingredient)
             ingredientsList.appendChild(ingredientDOM.getIngDOM())
         })
         // * J'affiche chaque appareil du SET via la classe Appliance
-        //const applianceList = document.getElementById("applianceList")
-        this.filterAppliance.forEach((appliance) => {
+        //const appliancesList = document.getElementById("appliancesList")
+        set2.forEach((appliance) => {
             const applianceDOM = new Appliance(appliance)
-            applianceList.appendChild(applianceDOM.getApplianceDOM())
+            appliancesList.appendChild(applianceDOM.getApplianceDOM())
         })
         // * J'affiche chaque ustensil du SET via la classe Ustensil
         //const ustensilsList = document.getElementById("ustensilsList")
-        this.filterUstensils.forEach((ustensil) => {
+        set3.forEach((ustensil) => {
             const ustensilDOM = new Ustensil(ustensil)
             ustensilsList.appendChild(ustensilDOM.getUstensilDOM())
         })  
@@ -171,6 +221,8 @@ class Search {
         
         
     }
+
+    
 
     // *** Méthode qui ajoute les tags au tableau this.tags ***\\
     pushTags() {
@@ -192,7 +244,7 @@ class Search {
                     break
                     case "appliancesLi":
                         this.tagsAppliances.push(e.target.textContent)
-                        this.filterAppliance.delete(keyword.textContent)
+                        this.filterAppliances.delete(keyword.textContent)
                     break
                     case "ustensilsLi":
                         this.tagsUstensils.push(e.target.textContent)
@@ -246,7 +298,7 @@ class Search {
                     const index = this.tagsIngredients.indexOf(tag)
                     this.tagsAppliances.splice(index, 1)
                     e.target.parentNode.remove(tag)
-                    this.filterAppliance.add(tag)
+                    this.filterAppliances.add(tag)
                     this.display()
                 }
             })
@@ -331,14 +383,14 @@ class Search {
     //     recipesZone.innerHTML = ""
     //     const ingredientsList = document.getElementById("ingredientsList")
     //     ingredientsList.innerHTML = ""
-    //     const applianceList = document.getElementById("applianceList")
-    //     applianceList.innerHTML = ""
+    //     const appliancesList = document.getElementById("appliancesList")
+    //     appliancesList.innerHTML = ""
     //     const ustensilsList = document.getElementById("ustensilsList")
     //     ustensilsList.innerHTML = ""
 
     //     // * Reset des SET
     //     this.filterIngredients.clear()
-    //     this.filterAppliance.clear()
+    //     this.filterAppliances.clear()
     //     this.filterUstensils.clear()
 
     //     // * Pour chaque recette du tableau des recettes mis à jour...
@@ -351,8 +403,8 @@ class Search {
     //         recipe.ingredients.forEach((ingredient) => {
     //             this.filterIngredients.add(ingredient.ingredient[0].toUpperCase() + ingredient.ingredient.substring(1).toLowerCase());
     //         })
-    //         // * ... j'ajoute chaque appareil de la recette dans le SET filterAppliance
-    //         this.filterAppliance.add(recipe.appliance);
+    //         // * ... j'ajoute chaque appareil de la recette dans le SET filterAppliances
+    //         this.filterAppliances.add(recipe.appliance);
     //         // * ... j'ajoute chaque ustensil de la recette dans le SET filterUstensils
     //         recipe.ustensils.forEach((ustensil) => {
     //             this.filterUstensils.add(ustensil)
