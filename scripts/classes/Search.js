@@ -42,8 +42,11 @@ class Search {
         this.filterAppliances.clear()
         this.filterUstensils.clear()
 
+        // * Tableau stockage première recherche input
+        let searchedArray = []
+
         // * Si l'inputValue > 3 lettres alors ça envoie les recettes correspondantes dans updatedRecipes
-        if(this.searchInput.length >= 3 || (this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0)) {
+        if(this.searchInput.length >= 3) {
             this.recipes.forEach((recipe) => {
                 if(recipe.name.toLowerCase().includes(this.searchInput) || 
                 recipe.description.toLowerCase().includes(this.searchInput) ||
@@ -52,25 +55,37 @@ class Search {
                 }) || (this.recipeHasIngredients(recipe)) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe))
                 {
                     this.displayRecipe(recipe)
-                } 
-
-                
-                
-
-                // * Tentative#2 de combiner if recherche input et tags
-                // this.displayedRecipe.forEach((recipe) => {
-                //     if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe)) {
-                //         recipesZone.innerHTML = ""
-                //         this.displayRecipe(recipe)
-                //         }
-                // })
-                
-                // * Tentative#1 de combiner if recherche input et tags
-                
-                
+                    searchedArray.push(recipe)
+                    return searchedArray
+                }   
             })
         } else {
             this.recipes.forEach((recipe) => {
+                this.displayRecipe(recipe)
+                searchedArray = this.recipes
+                return searchedArray
+                //console.log(searchedArray)
+            })
+        }
+        console.log(searchedArray)
+        
+        if(this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils > 0) {
+            let taggedArray = []
+
+            searchedArray.forEach((recipe) => {
+                if(this.recipeHasIngredients(recipe)) {
+                    taggedArray.push(recipe)
+                } else if(this.recipeHasAppliances(recipe)) {
+                    taggedArray.push(recipe)
+                } else if(this.recipeHasUstencils(recipe)) {
+                    taggedArray.push(recipe)
+                }
+                //console.log(taggedArray)
+            })
+            console.log(taggedArray)
+            recipesZone.innerHTML = ""
+
+            taggedArray.forEach((recipe) => {
                 this.displayRecipe(recipe)
             })
         }
@@ -171,6 +186,7 @@ class Search {
     // *** Méthode qui va afficher la recette si elle respecte les conditions *** \\
     displayRecipe(recipe) {
         const recipesZone = document.getElementById("recipesZone")
+        
         // * ... j'affiche la recette via la classe Recipe
         const recipeDOM = new Recipe(recipe);
         const recipeCard = recipeDOM.getRecipeCard();
@@ -255,7 +271,7 @@ class Search {
                 }
                 
                 this.displayTags()
-                this.display()
+                this.display(this.searchInput)
                 
             })
         })
@@ -282,7 +298,7 @@ class Search {
                     this.tagsIngredients.splice(index, 1)
                     e.target.parentNode.remove(tag)
                     this.filterIngredients.add(tag)
-                    this.display()
+                    this.display(this.searchInput)
                 }
             })
 
@@ -301,7 +317,7 @@ class Search {
                     this.tagsAppliances.splice(index, 1)
                     e.target.parentNode.remove(tag)
                     this.filterAppliances.add(tag)
-                    this.display()
+                    this.display(this.searchInput)
                 }
             })
         })
@@ -319,7 +335,7 @@ class Search {
                     this.tagsUstensils.splice(index, 1)
                     e.target.parentNode.remove(tag)
                     this.filterUstensils.add(tag)
-                    this.display()
+                    this.display(this.searchInput)
                 }
             })
         })
