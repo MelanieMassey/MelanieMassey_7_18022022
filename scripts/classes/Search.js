@@ -43,31 +43,41 @@ class Search {
         this.filterUstensils.clear()
 
         // * Si l'inputValue > 3 lettres alors ça envoie les recettes correspondantes dans updatedRecipes
-        if(this.searchInput.length >= 3 || (this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0)) {
+        if(this.searchInput.length >= 3 && (this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0)){
             this.recipes.forEach((recipe) => {
-                if(recipe.name.toLowerCase().includes(this.searchInput) || 
-                recipe.description.toLowerCase().includes(this.searchInput) ||
-                recipe.ingredients.forEach((ingredient) => {
-                    ingredient.ingredient.toLowerCase().includes(this.searchInput)
-                }) || (this.recipeHasIngredients(recipe)) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe))
-                {
+                if(this.recipeHasInput(recipe) && (this.recipeHasIngredients(recipe) || this.recipeHasAppliances(recipe) || this.recipeHasUstencils(recipe))) {
+                    this.displayRecipe(recipe)
+                }
+            })
+        } else if(this.searchInput.length >= 3) {
+            this.recipes.forEach((recipe) => {
+                if(this.recipeHasInput(recipe)) {
+                    this.displayRecipe(recipe)
+                }
+            })
+        } else if(this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0) {
+            this.recipes.forEach((recipe) => {
+                if(this.recipeHasIngredients(recipe) || this.recipeHasAppliances(recipe) || this.recipeHasUstencils(recipe)) {
+                    console.log("Ingredient ou Appareil ou Ustensile")
+                    console.log(recipe)
+                    this.displayRecipe(recipe)
+                }
+                else if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe)) {
+                    console.log("Ingrédient + Appareil")
+                    console.log(recipe)
                     this.displayRecipe(recipe)
                 } 
-
-                
-                
-
-                // * Tentative#2 de combiner if recherche input et tags
-                // this.displayedRecipe.forEach((recipe) => {
-                //     if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe)) {
-                //         recipesZone.innerHTML = ""
-                //         this.displayRecipe(recipe)
-                //         }
-                // })
-                
-                // * Tentative#1 de combiner if recherche input et tags
-                
-                
+                else if(this.recipeHasIngredients(recipe) && this.recipeHasUstencils(recipe)) {
+                    console.log("Ingrédient + Ustensile")
+                    console.log(recipe)
+                    this.displayRecipe(recipe)
+                } 
+                else if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe)) {
+                    console.log("Ingredient + appareil + ustensile")
+                    console.log(recipe)
+                    // ex: tomate + saladier + cuillière en bois => salade de pâtes
+                    this.displayRecipe(recipe) 
+                }
             })
         } else {
             this.recipes.forEach((recipe) => {
@@ -75,6 +85,10 @@ class Search {
             })
         }
 
+        
+
+        
+       
         // * Affiche message "pas de recette disponible"
         if(recipesZone.innerHTML == "") {
             const noRecipesDiv = document.createElement("div")
@@ -122,6 +136,16 @@ class Search {
 
 
         
+    }
+
+    recipeHasInput(recipe) {
+        if(recipe.name.toLowerCase().includes(this.searchInput) || 
+            recipe.description.toLowerCase().includes(this.searchInput) ||
+            recipe.ingredients.forEach((ingredient) => {
+                ingredient.ingredient.toLowerCase().includes(this.searchInput)
+            })) {
+                return true;
+            }
     }
 
     recipeHasIngredients(recipe) {
@@ -253,9 +277,9 @@ class Search {
                         this.filterUstensils.delete(keyword.textContent)
                     break
                 }
-                
+
                 this.displayTags()
-                this.display()
+                this.display(this.searchInput)
                 
             })
         })
@@ -282,7 +306,7 @@ class Search {
                     this.tagsIngredients.splice(index, 1)
                     e.target.parentNode.remove(tag)
                     this.filterIngredients.add(tag)
-                    this.display()
+                    this.display(this.searchInput)
                 }
             })
 
@@ -301,7 +325,7 @@ class Search {
                     this.tagsAppliances.splice(index, 1)
                     e.target.parentNode.remove(tag)
                     this.filterAppliances.add(tag)
-                    this.display()
+                    this.display(this.searchInput)
                 }
             })
         })
@@ -319,7 +343,7 @@ class Search {
                     this.tagsUstensils.splice(index, 1)
                     e.target.parentNode.remove(tag)
                     this.filterUstensils.add(tag)
-                    this.display()
+                    this.display(this.searchInput)
                 }
             })
         })
