@@ -33,6 +33,9 @@ getRecipes().then((recipes) => {
         const display = new Search(recipes);
         display.display(inputValue);
     })
+    // input.addEventListener("focusout", () => {
+    //     input.value = "Rechercher une recette";
+    // })
 });
 
 
@@ -40,6 +43,7 @@ getRecipes().then((recipes) => {
 // *** Event listeners des filtres *** \\
 // > Event listener click du filtre ingrédient
 const ingredientsButton = document.getElementById("ingredients_button");
+const ingredientsInput = document.getElementById("filter_ingredients");
 const ingredientsDown = document.getElementById("ingredientsDown");
 const ingredientsUp = document.getElementById("ingredientsUp");
 const ingredientsList = document.getElementById("ingredientsList");
@@ -52,42 +56,50 @@ function displayIngDown() {
     displayAppUp();
     displayUstUp();
 }
-ingredientsButton.addEventListener("click", displayIngDown);
+ingredientsInput.addEventListener("click", displayIngDown);
+ingredientsDown.addEventListener("click", displayIngDown);
 
 function displayIngUp() {
     ingredientsButton.style.width = "170px";
     ingredientsList.style.display = "none";
     ingredientsDown.style.display = "block";
     ingredientsUp.style.display = "none";
+    ingredientsInput.value = "Ingrédients";
 }
+//ingredientsInput.addEventListener("focusout", displayIngUp);
 ingredientsUp.addEventListener("click", displayIngUp);
 
 // > Event listener click du filtre appareils
-const applianceButton = document.getElementById("appliances_button");
-const applianceDown = document.getElementById("appliancesDown");
-const applianceUp = document.getElementById("appliancesUp");
-const applianceList = document.getElementById("appliancesList")
+const appliancesButton = document.getElementById("appliances_button");
+const appliancesInput = document.getElementById("filter_appliances");
+const appliancesDown = document.getElementById("appliancesDown");
+const appliancesUp = document.getElementById("appliancesUp");
+const appliancesList = document.getElementById("appliancesList")
 
 function displayAppDown() {
-    applianceButton.style.width = "400px";
-    applianceList.style.display = "grid";
-    applianceDown.style.display = "none";
-    applianceUp.style.display = "block";
+    appliancesButton.style.width = "400px";
+    appliancesList.style.display = "grid";
+    appliancesDown.style.display = "none";
+    appliancesUp.style.display = "block";
     displayIngUp();
     displayUstUp();
 }
-applianceButton.addEventListener("click", displayAppDown);
+appliancesInput.addEventListener("click", displayAppDown);
+appliancesDown.addEventListener("click", displayAppDown);
 
 function displayAppUp() {
-    applianceButton.style.width = "170px";
-    applianceList.style.display = "none";
-    applianceDown.style.display = "block";
-    applianceUp.style.display = "none";
+    appliancesButton.style.width = "170px";
+    appliancesList.style.display = "none";
+    appliancesDown.style.display = "block";
+    appliancesUp.style.display = "none";
+    appliancesInput.value = "Appareils";
 }
-applianceUp.addEventListener("click", displayAppUp);
+//appliancesInput.addEventListener("focusout", displayAppUp);
+appliancesUp.addEventListener("click", displayAppUp);
 
 // > Event listener click du filtre ustensils
 const ustensilsButton = document.getElementById("ustensils_button");
+const ustensilsInput = document.getElementById("filter_ustensils");
 const ustensilsDown = document.getElementById("ustensilsDown");
 const ustensilsUp = document.getElementById("ustensilsUp");
 const ustensilsList = document.getElementById("ustensilsList");
@@ -100,12 +112,15 @@ function displayUstDown() {
     displayIngUp();
     displayAppUp();
 }
-ustensilsButton.addEventListener("click", displayUstDown);
+ustensilsInput.addEventListener("click", displayUstDown);
+ustensilsDown.addEventListener("click", displayUstDown);
 
 function displayUstUp() {
     ustensilsButton.style.width = "170px";
     ustensilsList.style.display = "none";
     ustensilsDown.style.display = "block";
     ustensilsUp.style.display = "none";
+    ustensilsInput.value = "Ustensiles";
 }
+//ustensilsInput.addEventListener("focusout", displayUstUp);
 ustensilsUp.addEventListener("click", displayUstUp);

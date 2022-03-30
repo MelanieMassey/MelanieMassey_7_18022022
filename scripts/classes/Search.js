@@ -69,7 +69,7 @@ class Search {
         }
         console.log(searchedArray)
         
-        if(this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils > 0) {
+        if(this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0) {
             let taggedArray = []
 
             searchedArray.forEach((recipe) => {
@@ -269,7 +269,7 @@ class Search {
                         this.filterUstensils.delete(keyword.textContent)
                     break
                 }
-                
+                console.log(this.tagsUstensils)
                 this.displayTags()
                 this.display(this.searchInput)
                 
