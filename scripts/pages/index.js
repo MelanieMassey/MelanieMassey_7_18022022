@@ -64,7 +64,6 @@ function displayIngUp() {
     ingredientsList.style.display = "none";
     ingredientsDown.style.display = "block";
     ingredientsUp.style.display = "none";
-    ingredientsInput.value = "Ingrédients";
 }
 //ingredientsInput.addEventListener("focusout", displayIngUp);
 ingredientsUp.addEventListener("click", displayIngUp);
@@ -92,7 +91,6 @@ function displayAppUp() {
     appliancesList.style.display = "none";
     appliancesDown.style.display = "block";
     appliancesUp.style.display = "none";
-    appliancesInput.value = "Appareils";
 }
 //appliancesInput.addEventListener("focusout", displayAppUp);
 appliancesUp.addEventListener("click", displayAppUp);
@@ -120,7 +118,6 @@ function displayUstUp() {
     ustensilsList.style.display = "none";
     ustensilsDown.style.display = "block";
     ustensilsUp.style.display = "none";
-    ustensilsInput.value = "Ustensiles";
 }
 //ustensilsInput.addEventListener("focusout", displayUstUp);
 ustensilsUp.addEventListener("click", displayUstUp);

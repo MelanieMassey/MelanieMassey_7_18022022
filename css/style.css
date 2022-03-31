@@ -90,17 +90,19 @@ header img{
     width: 100%;
     height: 69px;
     background-color: transparent;
-    opacity: 0.25;
+    color: var(--black);
     border: transparent;
     padding: 2rem;
     margin-right: -48px;
     font-size: 1.5rem;
+    cursor: pointer;
 }
 
 .fa-search{
     color: var(--black);
     font-size: 1.5rem;
     z-index: 10;
+    cursor: pointer;
 }
 
 /*----------TAGS ZONE----------*/
@@ -162,7 +164,7 @@ header img{
     align-items: center;
     margin-right: 30px;
     padding: 10px;
-    display: relative;
+    position: relative;
 }
 
 #ingredients_button{
@@ -189,16 +191,24 @@ header img{
     outline: none;
 }
 
-.filters i {
+.filters::-webkit-input-placeholder {
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+.fas {
     position: absolute;
     top: 27px;
     right: 1.5rem;
+    cursor: pointer;
 }
 
 #ingredientsUp,
 #appliancesUp,
 #ustensilsUp {
     display: none;
+    cursor: pointer;
 }
 
 .filtersList {
@@ -256,8 +266,8 @@ header img{
 .ingredientsLi,
 .appliancesLi,
 .ustensilsLi {
-    
     padding-bottom: 5px;
+    cursor: pointer;
 }
 
 
@@ -311,7 +321,6 @@ header img{
 .recipeContent{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-row: 25px;
     padding: 0 10px 12px 10px;
     height: 136px;
 }
