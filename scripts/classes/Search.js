@@ -45,7 +45,7 @@ class Search {
         // * Tableau stockage première recherche input
         let searchedArray = []
 
-        // * Si l'inputValue > 3 lettres alors ça envoie les recettes correspondantes dans updatedRecipes
+        // * Si l'inputValue > 3 lettres ou si tags alors ça envoie les recettes correspondantes dans un tableau
         if(this.searchInput.length >= 3) {
             this.recipes.forEach((recipe) => {
                 if(recipe.name.toLowerCase().includes(this.searchInput) || 
@@ -69,6 +69,7 @@ class Search {
         }
         console.log(searchedArray)
         
+        // * Si tag(s) alors je push dans un tableau taggedArray et j'affiche les recettes finales
         if(this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0) {
             let taggedArray = []
 
