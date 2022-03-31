@@ -52,7 +52,7 @@ class Search {
                 recipe.description.toLowerCase().includes(this.searchInput) ||
                 recipe.ingredients.forEach((ingredient) => {
                     ingredient.ingredient.toLowerCase().includes(this.searchInput)
-                }) || (this.recipeHasIngredients(recipe)) && this.recipeHasAppliances(recipe) && this.recipeHasUstencils(recipe))
+                }) || (this.recipeHasIngredients(recipe, true)) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe))
                 {
                     this.displayRecipe(recipe)
                     searchedArray.push(recipe)
@@ -60,6 +60,7 @@ class Search {
                 }   
             })
         } else {
+            console.log("hello")
             this.recipes.forEach((recipe) => {
                 this.displayRecipe(recipe)
                 searchedArray = this.recipes
@@ -74,11 +75,7 @@ class Search {
             let taggedArray = []
 
             searchedArray.forEach((recipe) => {
-                if(this.recipeHasIngredients(recipe)) {
-                    taggedArray.push(recipe)
-                } else if(this.recipeHasAppliances(recipe)) {
-                    taggedArray.push(recipe)
-                } else if(this.recipeHasUstencils(recipe)) {
+                if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) {
                     taggedArray.push(recipe)
                 }
                 //console.log(taggedArray)
@@ -140,11 +137,13 @@ class Search {
         
     }
 
-    recipeHasIngredients(recipe) {
+    recipeHasIngredients(recipe, strict=false) {
         let result = 0;
-        if(this.tagsIngredients <= 0) {
-            return false;
+        
+        if(strict && this.tagsIngredients <= 0){
+            return false
         }
+
         this.tagsIngredients.forEach((ingredientTag) => {
             recipe.ingredients.forEach((ingredient) => {
                 if(ingredient.ingredient.toLowerCase() == ingredientTag.toLowerCase()) {
@@ -156,11 +155,13 @@ class Search {
     }
 
     // *** Méthodes qui vérifient si les tags sont contenus dans les recettes *** \\
-    recipeHasAppliances(recipe) {
+    recipeHasAppliances(recipe, strict=false) {
         let result = 0;
-        if(this.tagsAppliances <= 0){
-            return false;
+        
+        if(strict && this.tagsAppliances <= 0){
+            return false
         }
+
         this.tagsAppliances.forEach((applianceTag) => {
             if(recipe.appliance.toLowerCase() == applianceTag.toLowerCase()) {
                 result++;
@@ -169,11 +170,13 @@ class Search {
         return (result >= this.tagsAppliances.length)
     }
 
-    recipeHasUstencils(recipe) {
+    recipeHasUstensils(recipe, strict=false) {
         let result = 0;
-        if(this.tagsUstensils <= 0) {
-            return false;
+
+        if(strict && this.tagsUstensils <= 0){
+            return false
         }
+        
         this.tagsUstensils.forEach((ustensilTag) => {
             recipe.ustensils.forEach((ustensil) => {
                 if(ustensil.toLowerCase() == ustensilTag.toLowerCase()) {
