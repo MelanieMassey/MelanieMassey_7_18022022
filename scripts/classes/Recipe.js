@@ -72,4 +72,21 @@ class Recipe {
             divIngredients.appendChild(p);
         })
     }
+
+    hasIngredients(tagList, boolean) {
+        let result = 0;
+        
+        if(strict && this.tagsIngredients <= 0){
+            return false
+        }
+
+        tagList.forEach((tag) => {
+            recipe.ingredients.forEach((ingredient) => {
+                if(ingredient.ingredient.toLowerCase() == tag.toLowerCase()) {
+                    result++;
+                }
+            })
+        })
+        return (result >= this.tagsIngredients.length)
+    }
 }
