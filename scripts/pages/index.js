@@ -1,6 +1,6 @@
 // *** Récupération des données recettes et les rendres exploitables *** \\
 async function getRecipes() {
-    const result = await fetch ("data/recipes.json")
+    const result = await fetch ("./data/recipes.json")
     const recipes = await result.json()
     return recipes
 }
