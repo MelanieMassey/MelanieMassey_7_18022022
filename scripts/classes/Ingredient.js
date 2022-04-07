@@ -1,4 +1,4 @@
-class Ingredient {
+export class Ingredient {
     constructor(ingredientName) {
         this.ingredientName = ingredientName
     }

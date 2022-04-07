@@ -1,4 +1,4 @@
-class Tag {
+export class Tag {
     constructor(tagContent, type) {
         this.tag = tagContent
         this.type = type

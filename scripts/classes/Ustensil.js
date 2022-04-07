@@ -1,4 +1,4 @@
-class Ustensil {
+export class Ustensil {
     constructor(ustensilName) {
         this.ustensilName = ustensilName
     }

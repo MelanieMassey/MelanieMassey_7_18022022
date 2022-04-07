@@ -1,4 +1,4 @@
-class Appliance {
+export class Appliance {
     constructor(applianceName) {
         this.applianceName = applianceName
     }

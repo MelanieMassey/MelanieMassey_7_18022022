@@ -1,4 +1,4 @@
-class Recipe {
+export class Recipe {
     constructor(data) {
         this.id = data.id
         this.name = data.name
@@ -73,20 +73,21 @@ class Recipe {
         })
     }
 
-    hasIngredients(tagList, boolean) {
+    static hasIngredients(tagList, strict=false) {
+        console.log("entré dans méthode")
         let result = 0;
         
-        if(strict && this.tagsIngredients <= 0){
+        if(strict && tagList <= 0){
             return false
         }
 
         tagList.forEach((tag) => {
-            recipe.ingredients.forEach((ingredient) => {
+            this.ingredients.forEach((ingredient) => {
                 if(ingredient.ingredient.toLowerCase() == tag.toLowerCase()) {
                     result++;
                 }
             })
         })
-        return (result >= this.tagsIngredients.length)
+        return (result >= tagList.length)
     }
 }

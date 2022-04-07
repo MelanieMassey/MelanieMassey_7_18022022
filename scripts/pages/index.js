@@ -1,3 +1,5 @@
+import { Search } from "/scripts/classes/Search.js";
+
 // *** Récupération des données recettes et les rendres exploitables *** \\
 async function getRecipes() {
     const result = await fetch ("./Data/recipes.json")

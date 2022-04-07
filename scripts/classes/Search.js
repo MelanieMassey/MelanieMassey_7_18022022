@@ -1,4 +1,10 @@
-class Search {
+import { Recipe } from "./Recipe.js"; 
+import { Ingredient } from "./Ingredient.js";
+import { Appliance } from "./Appliance.js";
+import { Ustensil } from "./Ustensil.js";
+import { Tag } from "./Tag.js";
+
+export class Search {
         
     constructor(recipes) {
         // * Récupération des recettes (recipes.recipes permet d'afficher un tableau direct)
@@ -52,7 +58,7 @@ class Search {
                 recipe.description.toLowerCase().includes(this.searchInput) ||
                 recipe.ingredients.forEach((ingredient) => {
                     ingredient.ingredient.toLowerCase().includes(this.searchInput)
-                }) || (this.recipeHasIngredients(recipe, true)) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) 
+                }) || (recipe.hasIngredients(this.tagsIngredients, true)) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) 
                 {
                     this.displayRecipe(recipe)
                     searchedArray.push(recipe)
@@ -60,7 +66,7 @@ class Search {
                 }
             })
         } else {
-            console.log("hello")
+            console.log("hello else")
             this.recipes.forEach((recipe) => {
                 this.displayRecipe(recipe)
                 searchedArray = this.recipes
