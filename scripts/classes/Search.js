@@ -52,7 +52,7 @@ class Search {
                 recipe.description.toLowerCase().includes(this.searchInput) ||
                 recipe.ingredients.forEach((ingredient) => {
                     ingredient.ingredient.toLowerCase().includes(this.searchInput)
-                }) || (this.recipeHasIngredients(recipe, true)) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) 
+                }) || (this.recipeHasIngredients(recipe, true)) && this.recipeHasAppliances(recipe, true) && this.recipeHasUstensils(recipe, true)) 
                 {
                     this.displayRecipe(recipe)
                     searchedArray.push(recipe)
