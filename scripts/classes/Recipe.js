@@ -73,14 +73,14 @@ export class Recipe {
         })
     }
 
-    static hasIngredients(tagList, strict=false) {
-        console.log("entré dans méthode")
+    hasIngredients(tagList, strict=false) {
+        console.log("entré dans hasIngredients")
         let result = 0;
         
         if(strict && tagList <= 0){
             return false
         }
-
+    
         tagList.forEach((tag) => {
             this.ingredients.forEach((ingredient) => {
                 if(ingredient.ingredient.toLowerCase() == tag.toLowerCase()) {
@@ -90,4 +90,22 @@ export class Recipe {
         })
         return (result >= tagList.length)
     }
+}
+
+export function hasIngredients(tagList, strict=false) {
+    console.log("entré dans hasIngredients")
+    let result = 0;
+    
+    if(strict && tagList <= 0){
+        return false
+    }
+
+    tagList.forEach((tag) => {
+        this.ingredients.forEach((ingredient) => {
+            if(ingredient.ingredient.toLowerCase() == tag.toLowerCase()) {
+                result++;
+            }
+        })
+    })
+    return (result >= tagList.length)
 }

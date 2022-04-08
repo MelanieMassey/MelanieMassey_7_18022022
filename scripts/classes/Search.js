@@ -1,8 +1,11 @@
 import { Recipe } from "./Recipe.js"; 
+import { hasIngredients } from "./Recipe.js";
 import { Ingredient } from "./Ingredient.js";
 import { Appliance } from "./Appliance.js";
 import { Ustensil } from "./Ustensil.js";
 import { Tag } from "./Tag.js";
+
+
 
 export class Search {
         
@@ -28,6 +31,7 @@ export class Search {
 
     // *** Méthode principale qui affiche les recettes *** \\
     display(inputValue=null) {
+        console.log(this.recipes)
         
         if(inputValue != null) {
             this.searchInput = inputValue
@@ -53,28 +57,35 @@ export class Search {
 
         // * Si l'inputValue > 3 lettres ou si tags alors ça envoie les recettes correspondantes dans un tableau
         if(this.searchInput.length >= 3) {
+            //for (const recipe of this.recipes) {}
+            // for (i=0, i < this.recipes.length, i++) {}
+            
+            
             this.recipes.forEach((recipe) => {
                 if(recipe.name.toLowerCase().includes(this.searchInput) || 
                 recipe.description.toLowerCase().includes(this.searchInput) ||
                 recipe.ingredients.forEach((ingredient) => {
                     ingredient.ingredient.toLowerCase().includes(this.searchInput)
-                }) || (recipe.hasIngredients(this.tagsIngredients, true)) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) 
+                }) || (this.recipeHasIngredients(recipe)) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) 
                 {
+                    console.log("if")
                     this.displayRecipe(recipe)
                     searchedArray.push(recipe)
                     return searchedArray
                 }
             })
         } else {
-            console.log("hello else")
+            console.log("else")
             this.recipes.forEach((recipe) => {
                 this.displayRecipe(recipe)
                 searchedArray = this.recipes
                 return searchedArray
                 //console.log(searchedArray)
             })
+            
         }
-        console.log(searchedArray)
+        //return searchedArray
+        //console.log(searchedArray)
         
         // * Si tag(s) alors je push dans un tableau taggedArray et j'affiche les recettes finales
         if(this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0) {
