@@ -47,6 +47,7 @@ class Search {
 
         // * Si l'inputValue > 3 lettres ou si tags alors ça envoie les recettes correspondantes dans un tableau
         if(this.searchInput.length >= 3) {
+            console.log("if")
             this.recipes.forEach((recipe) => {
                 if(recipe.name.toLowerCase().includes(this.searchInput) || 
                 recipe.description.toLowerCase().includes(this.searchInput) ||
@@ -54,13 +55,14 @@ class Search {
                     ingredient.ingredient.toLowerCase().includes(this.searchInput)
                 }) || (this.recipeHasIngredients(recipe, true)) && this.recipeHasAppliances(recipe, true) && this.recipeHasUstensils(recipe, true)) 
                 {
+                    console.log("if bis")
                     this.displayRecipe(recipe)
                     searchedArray.push(recipe)
                     return searchedArray
                 }
             })
         } else {
-            console.log("hello")
+            console.log("else")
             this.recipes.forEach((recipe) => {
                 this.displayRecipe(recipe)
                 searchedArray = this.recipes
@@ -68,17 +70,18 @@ class Search {
                 //console.log(searchedArray)
             })
         }
-        console.log(searchedArray)
+        
         
         // * Si tag(s) alors je push dans un tableau taggedArray et j'affiche les recettes finales
         if(this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0) {
+            console.log("if tags")
             let taggedArray = []
 
             searchedArray.forEach((recipe) => {
                 if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) {
+                    console.log("if tags if")
                     taggedArray.push(recipe)
                 }
-                //console.log(taggedArray)
             })
             console.log(taggedArray)
             recipesZone.innerHTML = ""
@@ -140,7 +143,7 @@ class Search {
     recipeHasIngredients(recipe, strict=false) {
         let result = 0;
         
-        if(strict && this.tagsIngredients <= 0){
+        if(strict && this.tagsIngredients.length <= 0){
             return false
         }
 
@@ -158,7 +161,7 @@ class Search {
     recipeHasAppliances(recipe, strict=false) {
         let result = 0;
         
-        if(strict && this.tagsAppliances <= 0){
+        if(strict && this.tagsAppliances.length <= 0){
             return false
         }
 
@@ -173,7 +176,7 @@ class Search {
     recipeHasUstensils(recipe, strict=false) {
         let result = 0;
 
-        if(strict && this.tagsUstensils <= 0){
+        if(strict && this.tagsUstensils.length <= 0){
             return false
         }
         
@@ -273,7 +276,6 @@ class Search {
                         this.filterUstensils.delete(keyword.textContent)
                     break
                 }
-                console.log(this.tagsUstensils)
                 this.displayTags()
                 this.display(this.searchInput)
                 
