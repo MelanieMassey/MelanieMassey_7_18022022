@@ -66,7 +66,7 @@ export class Search {
                 recipe.description.toLowerCase().includes(this.searchInput) ||
                 recipe.ingredients.forEach((ingredient) => {
                     ingredient.ingredient.toLowerCase().includes(this.searchInput)
-                }) || (this.recipeHasIngredients(recipe)) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) 
+                }) || (this.recipeHasIngredients(recipe, true)) && this.recipeHasAppliances(recipe, true) && this.recipeHasUstensils(recipe, true)) 
                 {
                     console.log("if")
                     this.displayRecipe(recipe)
@@ -92,7 +92,7 @@ export class Search {
             let taggedArray = []
 
             searchedArray.forEach((recipe) => {
-                if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) {
+                if(this.recipeHasIngredients(recipe, true) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) {
                     taggedArray.push(recipe)
                 }
                 //console.log(taggedArray)
