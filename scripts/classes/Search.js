@@ -47,25 +47,34 @@ class Search {
 
         // * Si l'inputValue > 3 lettres ou si tags alors ça envoie les recettes correspondantes dans un tableau
         if(this.searchInput.length >= 3) {
-            this.recipes.forEach((recipe) => {
+            for(let recipe of this.recipes) {
+                console.log(this.recipes)
+                console.log(recipe)
+                let ingredientsHaveValue = false
+                for(let ingredient of recipe.ingredients) {
+                    if(ingredient.ingredient.toLowerCase().includes(this.searchInput)) {
+                        ingredientsHaveValue = true;
+                        console.log("ingredients have value")
+                    }
+                }
                 if(recipe.name.toLowerCase().includes(this.searchInput) || 
                 recipe.description.toLowerCase().includes(this.searchInput) ||
-                recipe.ingredients.forEach((ingredient) => {
-                    ingredient.ingredient.toLowerCase().includes(this.searchInput)
-                }) || (this.recipeHasIngredients(recipe, true)) && this.recipeHasAppliances(recipe, true) && this.recipeHasUstensils(recipe, true)) 
-                {
+                ingredientsHaveValue ||
+                (this.recipeHasIngredients(recipe, true) && this.recipeHasAppliances(recipe, true) && this.recipeHasUstensils(recipe, true))) {
+                    console.log("display recipe " + recipe.name)
                     this.displayRecipe(recipe)
                     searchedArray.push(recipe)
-                    return searchedArray
+                    //return searchedArray
                 }
-            })
+            }
         } else {
-            this.recipes.forEach((recipe) => {
+            for(let recipe of this.recipes) {
                 this.displayRecipe(recipe)
                 searchedArray = this.recipes
-                return searchedArray
-            })
+                //return searchedArray
+            }
         }
+        console.log(searchedArray)
         
         
         // * Si tag(s) alors je push dans un tableau taggedArray et j'affiche les recettes finales
@@ -134,52 +143,58 @@ class Search {
     }
 
     recipeHasIngredients(recipe, strict=false) {
+        console.log("recipesHasIngredients")
         let result = 0;
         
         if(strict && this.tagsIngredients.length <= 0){
             return false
         }
 
-        this.tagsIngredients.forEach((ingredientTag) => {
-            recipe.ingredients.forEach((ingredient) => {
+        for(let ingredientTag of this.tagsIngredients) {
+            for(let ingredient of recipe.ingredients) {
                 if(ingredient.ingredient.toLowerCase() == ingredientTag.toLowerCase()) {
                     result++;
                 }
-            })
-        })
+            }
+        }
+
         return (result >= this.tagsIngredients.length)
     }
 
     // *** Méthodes qui vérifient si les tags sont contenus dans les recettes *** \\
     recipeHasAppliances(recipe, strict=false) {
+        console.log("recipeHasAppliances")
         let result = 0;
         
         if(strict && this.tagsAppliances.length <= 0){
             return false
         }
 
-        this.tagsAppliances.forEach((applianceTag) => {
+        for(let applianceTag of this.tagsAppliances) {
             if(recipe.appliance.toLowerCase() == applianceTag.toLowerCase()) {
                 result++;
             }
-        })
+        }
+        
         return (result >= this.tagsAppliances.length)
     }
 
     recipeHasUstensils(recipe, strict=false) {
+        console.log("recipeHasUstensils")
         let result = 0;
 
         if(strict && this.tagsUstensils.length <= 0){
             return false
         }
         
-        this.tagsUstensils.forEach((ustensilTag) => {
-            recipe.ustensils.forEach((ustensil) => {
+        for(let ustensilTag of this.tagsUstensils) {
+            for(let ustensil of recipe.ustensils) {
                 if(ustensil.toLowerCase() == ustensilTag.toLowerCase()) {
                     result++;
                 }
-            })
-        })
+            }
+        }
+        
         return (result >= this.tagsUstensils.length)
     }
 
