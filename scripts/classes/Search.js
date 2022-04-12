@@ -59,39 +59,32 @@ class Search {
                 }
                 if(recipe.name.toLowerCase().includes(this.searchInput) || 
                 recipe.description.toLowerCase().includes(this.searchInput) ||
-                ingredientsHaveValue ||
-                (this.recipeHasIngredients(recipe, true) && this.recipeHasAppliances(recipe, true) && this.recipeHasUstensils(recipe, true))) {
+                ingredientsHaveValue) {
                     console.log("display recipe " + recipe.name)
-                    this.displayRecipe(recipe)
                     searchedArray.push(recipe)
                     //return searchedArray
                 }
             }
         } else {
-            for(let recipe of this.recipes) {
-                this.displayRecipe(recipe)
-                searchedArray = this.recipes
-                //return searchedArray
-            }
+            searchedArray = this.recipes
         }
         console.log(searchedArray)
         
-        
+        let taggedArray = []
         // * Si tag(s) alors je push dans un tableau taggedArray et j'affiche les recettes finales
         if(this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0) {
-            let taggedArray = []
-
             searchedArray.forEach((recipe) => {
                 if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) {
                     taggedArray.push(recipe)
                 }
             })
-            recipesZone.innerHTML = ""
+        } else {
+            taggedArray = searchedArray
+        }
 
-            taggedArray.forEach((recipe) => {
+        taggedArray.forEach((recipe) => {
                 this.displayRecipe(recipe)
             })
-        }
 
         // * Affiche message "pas de recette disponible"
         if(recipesZone.innerHTML == "") {
