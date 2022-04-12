@@ -52,37 +52,31 @@ class Search {
                 recipe.description.toLowerCase().includes(this.searchInput) ||
                 recipe.ingredients.forEach((ingredient) => {
                     ingredient.ingredient.toLowerCase().includes(this.searchInput)
-                }) || (this.recipeHasIngredients(recipe, true)) && this.recipeHasAppliances(recipe, true) && this.recipeHasUstensils(recipe, true)) 
-                {
-                    this.displayRecipe(recipe)
+                })) {
                     searchedArray.push(recipe)
-                    return searchedArray
                 }
             })
         } else {
-            this.recipes.forEach((recipe) => {
-                this.displayRecipe(recipe)
-                searchedArray = this.recipes
-                return searchedArray
-            })
+            searchedArray = this.recipes
         }
-        
-        
+        console.log(searchedArray)
+
+
+        let taggedArray = []
         // * Si tag(s) alors je push dans un tableau taggedArray et j'affiche les recettes finales
         if(this.tagsIngredients.length > 0 || this.tagsAppliances.length > 0 || this.tagsUstensils.length > 0) {
-            let taggedArray = []
-
             searchedArray.forEach((recipe) => {
                 if(this.recipeHasIngredients(recipe) && this.recipeHasAppliances(recipe) && this.recipeHasUstensils(recipe)) {
                     taggedArray.push(recipe)
                 }
             })
-            recipesZone.innerHTML = ""
-
-            taggedArray.forEach((recipe) => {
-                this.displayRecipe(recipe)
-            })
+        } else {
+            taggedArray = searchedArray
         }
+
+        taggedArray.forEach((recipe) => {
+            this.displayRecipe(recipe)
+        })
 
         // * Affiche message "pas de recette disponible"
         if(recipesZone.innerHTML == "") {
